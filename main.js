@@ -3,6 +3,19 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow } = require('electron')
 const path = require('node:path')
+const PHPServer = require('php-server-manager');
+
+server = new PHPServer({
+  php: `${__dirname}/php/php.exe`,
+  port: 8000,
+  directory: `${__dirname}/laravel/public`,
+  directives: {
+      display_errors: 1,
+      expose_php: 1
+  }
+  });
+
+server.run();
 
 const createWindow = () => {
   // Create the browser window.
@@ -15,15 +28,15 @@ const createWindow = () => {
   })
 
   // and load the index.html of the app.
-  mainWindow.loadFile('index.html')
+  mainWindow.loadURL('http://'+server.host+':'+server.port+' ')
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
+// Algumas APIs podem ser usadas somente depois que este evento ocorre.
 app.whenReady().then(() => {
   createWindow()
 
@@ -42,4 +55,4 @@ app.on('window-all-closed', () => {
 })
 
 // In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
+// code. Você também pode colocar eles em arquivos separados e requeridos-as aqui.
