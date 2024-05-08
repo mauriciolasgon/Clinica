@@ -3,19 +3,7 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow } = require('electron')
 const path = require('node:path')
-const PHPServer = require('php-server-manager');
-
-server = new PHPServer({
-  php: `${__dirname}/php/php.exe`,
-  port: 8000,
-  directory: `${__dirname}/laravel/public`,
-  directives: {
-      display_errors: 1,
-      expose_php: 1
-  }
-  });
-
-server.run();
+const port = 8000, host = '127.0.0.1';
 
 const createWindow = () => {
   // Create the browser window.
@@ -28,7 +16,7 @@ const createWindow = () => {
   })
 
   // and load the index.html of the app.
-  mainWindow.loadURL('http://'+server.host+':'+server.port+' ')
+  mainWindow.loadURL('http://'+host+':'+port+' ')
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools()

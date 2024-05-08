@@ -1,0 +1,10 @@
+
+services:
+  php:
+    build: ./php
+    ports:
+      - "8000:80"
+    volumes:
+      - ./laravel:/var/www/html
+      - ./laravel/config/apache.conf:/etc/apache2/sites-available/000-default.conf
+
