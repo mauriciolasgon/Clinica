@@ -1,7 +1,5 @@
 FROM php:8.3.6-apache
 
-
-
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     git \
@@ -19,7 +17,7 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
 # Get latest Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2.7.6 /usr/bin/composer /usr/bin/composer
 
 COPY /laravel /var/www/html
 

@@ -5,7 +5,6 @@ services:
     ports:
       - "8000:80"
     volumes:
-      - ./logs/php.log:/var/log/fpm-php.www.log
       - ./laravel/config/apache.conf:/etc/apache2/sites-available/000-default.conf
       
     environment:
