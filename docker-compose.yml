@@ -1,10 +1,27 @@
 
 services:
   php:
-    build: ./php
+    build: .
     ports:
       - "8000:80"
     volumes:
-      - ./laravel:/var/www/html
+      - ./logs/php.log:/var/log/fpm-php.www.log
       - ./laravel/config/apache.conf:/etc/apache2/sites-available/000-default.conf
+      
+    environment:
+      - DB_HOST=db
+    links:
+    - db
+  db:
+    image: mysql:latest  # Especifique a imagem do seu banco de dados
+    environment:
+      MYSQL_ROOT_PASSWORD: '123'
+      MYSQL_DATABASE: 'electron'
+    ports:
+      - "3307:3306"
+    volumes:
+      - db-data:/var/lib/mysql  # Volume para persistir os dados do banco de dados
+
+volumes:
+  db-data:  
 
