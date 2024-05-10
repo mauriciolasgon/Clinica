@@ -22,6 +22,7 @@ class User extends Authenticatable
         'password',
         'numero_cel',
         'cep',
+        'role',
         'ficha',
     ];
 
