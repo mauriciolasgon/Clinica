@@ -33,6 +33,8 @@ COPY entrypoint.sh /usr/local/bin/docker-php-entrypoint
 
 RUN npm install
 
+RUN composer install
+
 RUN npm run build
 
 # Enable Apache mod_rewrite
@@ -42,7 +44,7 @@ RUN chown -R www-data:www-data /var/www/html/storage/
 
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
-RUN composer install
+
 
 # RUN composer require laravel/breeze --dev
 
