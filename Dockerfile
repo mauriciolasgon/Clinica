@@ -29,7 +29,11 @@ COPY --from=composer:2.7.6 /usr/bin/composer /usr/bin/composer
 
 COPY /laravel /var/www/html
 
+COPY entrypoint.sh /usr/local/bin/docker-php-entrypoint
+
 RUN npm install
+
+RUN npm run build
 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
@@ -45,4 +49,4 @@ RUN composer install
 
 EXPOSE 80
 
-CMD ["apache2-foreground"]
+CMD ["/entrypoint.sh"]
