@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # Esperar 10 segundos
 sleep 30
 

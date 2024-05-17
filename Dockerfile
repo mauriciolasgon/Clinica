@@ -31,6 +31,7 @@ COPY /laravel /var/www/html
 
 COPY entrypoint.sh /usr/local/bin/docker-php-entrypoint
 
+
 RUN npm install
 
 RUN composer install
@@ -50,5 +51,6 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 
 EXPOSE 80
+
 
 CMD ["/entrypoint.sh"]
