@@ -2,7 +2,7 @@
 
 
 # Esperar 10 segundos
-sleep 15
+sleep 30
 
 # Iniciar o Apache em primeiro plano
 apache2-foreground &

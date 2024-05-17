@@ -16,6 +16,8 @@ services:
       - db
     networks:
       - app-network
+    depends_on:
+      - db
 
   db:
     image: mysql:latest
@@ -41,6 +43,8 @@ services:
       - frontend-build:/var/www/html/public/build
     networks:
       - app-network
+    depends_on:
+    - php
 
 volumes:
   db-data:
