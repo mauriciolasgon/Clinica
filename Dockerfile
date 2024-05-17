@@ -10,6 +10,14 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip
 
+    RUN apt-get update \
+    && apt-get install -y \
+        nodejs \
+        npm \
+        iputils-ping \
+        dnsutils \
+        netcat-openbsd   # or netcat-traditional
+
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -21,12 +29,26 @@ COPY --from=composer:2.7.6 /usr/bin/composer /usr/bin/composer
 
 COPY /laravel /var/www/html
 
+COPY entrypoint.sh /usr/local/bin/docker-php-entrypoint
+
+RUN npm install
+
+RUN composer install
+
+RUN npm run build
+
+# Enable Apache mod_rewrite
+RUN a2enmod rewrite
+
 RUN chown -R www-data:www-data /var/www/html/storage/
 
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
-RUN composer install
- 
+
+
+# RUN composer require laravel/breeze --dev
+
+
 EXPOSE 80
 
-CMD ["apache2-foreground"]
+CMD ["/entrypoint.sh"]
