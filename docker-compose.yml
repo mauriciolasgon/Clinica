@@ -1,26 +1,55 @@
 
+
 services:
   php:
     build: .
+    container_name: servidor-php
     ports:
       - "8000:80"
     volumes:
       - ./laravel/config/apache.conf:/etc/apache2/sites-available/000-default.conf
+      - frontend-build:/var/www/html/public/build
       
     environment:
       - DB_HOST=db
     links:
-    - db
+      - db
+    networks:
+      - app-network
+    depends_on:
+      - db
+
   db:
-    image: mysql:latest  # Especifique a imagem do seu banco de dados
+    image: mysql:latest
     environment:
       MYSQL_ROOT_PASSWORD: '123'
       MYSQL_DATABASE: 'electron'
     ports:
       - "3307:3306"
     volumes:
-      - db-data:/var/lib/mysql  # Volume para persistir os dados do banco de dados
+      - db-data:/var/lib/mysql
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.node
+    container_name: frontend
+    ports:
+      - "3001:3000"
+    restart: unless-stopped
+    volumes:
+      - frontend-build:/var/www/html/public/build
+    networks:
+      - app-network
+    depends_on:
+    - php
 
 volumes:
-  db-data:  
+  db-data:
+  frontend-build:
 
+networks:
+  app-network:
+    driver: bridge
