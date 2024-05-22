@@ -4,7 +4,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container d-flex">
         <a class="navbar-brand" href="#">Clínica Saúde Total</a>
-        <button @click="goToRoute('/login')" class="btn btn-secondary ml-auto">Login</button>
+        <button @click="goToRoute('/login')" class="btn btn-secondary ml-auto">Log</button>
       </div>
     </nav>
 

@@ -13,5 +13,7 @@ cd /var/www/html
 # Executar as migrações do Laravel
 php artisan migrate
 
+npm run dev &
+
 # Mantenha o contêiner em execução
 tail -f /dev/null
