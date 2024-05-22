@@ -5,19 +5,27 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Mail\MyEmail;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 Route::get('/', function () {
-    
     return Inertia::render('LandingPage');
-
 });
 
+Route::post('/api/contact', function (Request $request) {
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'message' => 'required|string',
+    ]);
 
-Route::get('/testroute', function (){
-    $name = "Gabriel";
+    $name = $request->input('name');
+    $email = $request->input('email');
+    $messageContent = $request->input('message');
 
-    Mail::to('gabrieltlopes22@gmail.com') -> send(new MyEmail($name));
-    return 'Email sent!';
+    Mail::to('contato@clinicasaude.com')->send(new MyEmail($name, $email, $messageContent));
+
+    return response()->json(['message' => 'Email sent successfully!']);
 });
 
 Route::get('/login', function () {
