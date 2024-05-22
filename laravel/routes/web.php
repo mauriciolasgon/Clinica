@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AgendaController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -9,7 +11,6 @@ use Inertia\Inertia;
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
@@ -23,23 +24,30 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::prefix('schedule')->group(function () {
+        Route::get('/', [ScheduleController::class, 'index'])->name('schedule.index');
+        Route::get('/schedule', [ScheduleController::class, 'getSchedule']);
+        Route::get('/create', [ScheduleController::class, 'create'])->name('schedule.create');
+        Route::post('/', [ScheduleController::class, 'store'])->name('schedule.store');
+        Route::get('/{schedule}/edit', [ScheduleController::class, 'edit'])->name('schedule.edit');
+        Route::put('/{schedule}', [ScheduleController::class, 'update'])->name('schedule.update');
+        Route::delete('/{schedule}', [ScheduleController::class, 'destroy'])->name('schedule.destroy');
+    });
+
+    Route::middleware('auth')->group(function () {
+        Route::prefix('agendas')->group(function () {
+            Route::get('/', [AgendaController::class, 'index'])->name('agendas.index');
+            Route::get('/create', [AgendaController::class, 'create'])->name('agendas.create');
+            Route::post('/', [AgendaController::class, 'store'])->name('agendas.store');
+            Route::get('/{agenda}/edit', [AgendaController::class, 'edit'])->name('agendas.edit');
+        });
+    });
+    
 });
-Route::prefix('schedule')->group(function () {
-    Route::get('/', [ScheduleController::class, 'index'])->name('schedule.index');
-    Route::get('/create', [ScheduleController::class, 'create'])->name('schedule.create');
-    Route::post('/', [ScheduleController::class, 'store'])->name('schedule.store');
-});
 
-Route::prefix('api')->group(function () {
-    Route::get('/schedules', [ScheduleController::class, 'index'])->name('api.schedules.index');
-    Route::get('/schedules/create', [ScheduleController::class, 'create'])->name('api.schedules.create');
-    Route::post('/schedules', [ScheduleController::class, 'store'])->name('api.schedules.store');
-    Route::get('/schedules/{schedule}/edit', [ScheduleController::class, 'edit'])->name('api.schedules.edit');
-    Route::put('/schedules/{schedule}', [ScheduleController::class, 'update'])->name('api.schedules.update');
-    Route::delete('/schedules/{schedule}', [ScheduleController::class, 'destroy'])->name('api.schedules.destroy');    
-});
-
-
-
+Route::get('/register-psicologa', [RegisteredUserController::class, 'createPsicologa'])->name('register.psicologa');
+Route::post('/register-psicologa', [RegisteredUserController::class, 'store'])->name('register.psicologa.store');
 
 require __DIR__.'/auth.php';
+

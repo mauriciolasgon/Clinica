@@ -18,6 +18,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->integer('role') -> default(1);
+            $table->string('cep')->nullable();
+            $table->string('numero_cel')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
@@ -46,5 +48,7 @@ return new class extends Migration
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
+        Schema::dropIfExists('cep');
+        Schema::dropIfExists('numero_cel');
     }
 };
