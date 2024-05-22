@@ -1,26 +1,25 @@
-
-
 services:
   php:
     build: .
-    container_name: servidor-php
     ports:
       - "8000:80"
+      - "3000:3000"
     volumes:
+      - ./laravel:/var/www/html:rw,cached
       - ./laravel/config/apache.conf:/etc/apache2/sites-available/000-default.conf
-      - frontend-build:/var/www/html/public/build
-      
+      - /var/www/html/node_modules 
+      - /var/www/html/public/build
+      - /var/www/html/vendor
+
     environment:
       - DB_HOST=db
-    links:
-      - db
     networks:
       - app-network
     depends_on:
       - db
 
   db:
-    image: mysql:latest
+    image: mysql:latest  # Especifique a imagem do seu banco de dados
     environment:
       MYSQL_ROOT_PASSWORD: '123'
       MYSQL_DATABASE: 'electron'
@@ -31,25 +30,11 @@ services:
     networks:
       - app-network
 
-  frontend:
-    build:
-      context: .
-      dockerfile: Dockerfile.node
-    container_name: frontend
-    ports:
-      - "3001:3000"
-    restart: unless-stopped
-    volumes:
-      - frontend-build:/var/www/html/public/build
-    networks:
-      - app-network
-    depends_on:
-    - php
-
 volumes:
   db-data:
-  frontend-build:
 
 networks:
   app-network:
     driver: bridge
+
+
