@@ -48,4 +48,24 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function sessoesComoPaciente()
+    {
+        return $this->hasMany(Schedule::class, 'paciente_id');
+    }
+
+    public function sessoesComoPsicologa()
+    {
+        return $this->hasMany(Schedule::class, 'psicologa_id');
+    }
+
+    public function isPaciente()
+    {
+        return $this->role == 1;
+    }
+
+    public function isPsicologa()
+    {
+        return $this->role == 2;
+    }
 }

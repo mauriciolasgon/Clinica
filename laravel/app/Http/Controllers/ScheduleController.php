@@ -2,62 +2,85 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Schedule;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class ScheduleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $schedules = Schedule::all();
-        return Inertia::render('Schedule/Index', ['schedules' => $schedules]);
+        $schedules = Schedule::with('paciente')
+            ->where('psicologa_id', $request->user()->id)
+            ->get();
+
+        return Inertia::render('Schedule/Index', [
+            'schedules' => $schedules,
+            'psicologa_id' => $request->user()->id
+        ]);
     }
 
-    public function create()
+    public function getSchedule(Request $request)
     {
-        return Inertia::render('Schedule/Create');
+        $psicologa_id = $request->query('psicologa_id');
+        $schedules = Schedule::with('paciente')
+            ->where('psicologa_id', $psicologa_id)
+            ->get();
+        return response()->json($schedules);
+    }
+
+    public function create(Request $request)
+    {
+        return Inertia::render('Schedule/Create', [
+            'psicologa_id' => $request->user()->id
+        ]);
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'date' => 'required|date',
+            'psicologa_id' => 'required|integer|exists:users,id',
+            'data' => 'required|date',
+            'paciente_id' => 'required|integer|exists:users,id',
+            'tempo_de_sessao' => 'required|integer',
+            'observacoes' => 'nullable|string',
+            'ocupado' => 'required|boolean'
         ]);
 
-        Schedule::create([
-            'title' => $request->title,
-            'date' => $request->date,
-        ]);
+        Schedule::create($request->all());
 
-        return redirect()->route('api.schedules.index')->with('success', 'Agendamento criado com sucesso!');
+        return redirect()->route('schedule.index');
     }
 
-    public function edit(Schedule $schedule)
+    public function edit($id)
     {
-        return Inertia::render('Schedule/Edit', ['schedule' => $schedule]);
+        $schedule = Schedule::findOrFail($id);
+        return Inertia::render('Schedule/Edit', [
+            'schedule' => $schedule
+        ]);
     }
 
-    public function update(Request $request, Schedule $schedule)
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'date' => 'required|date',
+            'data' => 'required|date',
+            'paciente_id' => 'required|integer|exists:users,id',
+            'tempo_de_sessao' => 'required|integer',
+            'observacoes' => 'nullable|string',
+            'ocupado' => 'required|boolean'
         ]);
 
-        $schedule->update([
-            'title' => $request->title,
-            'date' => $request->date,
-        ]);
+        $schedule = Schedule::findOrFail($id);
+        $schedule->update($request->all());
 
-        return redirect()->route('api.schedules.index')->with('success', 'Agendamento atualizado com sucesso!');
+        return redirect()->route('schedule.index');
     }
 
-    public function destroy(Schedule $schedule)
+    public function destroy($id)
     {
+        $schedule = Schedule::findOrFail($id);
         $schedule->delete();
 
-        return redirect()->route('api.schedules.index')->with('success', 'Agendamento excluído com sucesso!');
+        return redirect()->route('schedule.index');
     }
 }

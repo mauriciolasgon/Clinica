@@ -15,9 +15,15 @@ class CreateSchedulesTable extends Migration
     {
         Schema::create('schedules', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->date('date');
-            $table->timestamps();
+            $table->foreignId('agenda_id')->constrained('agendas')->onDelete('cascade');
+            $table->foreignId('paciente_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('psicologa_id')->constrained('users')->onDelete('cascade');
+            $table->date('data');
+            $table->time('horario');
+            $table->time('tempo_sessao');
+            $table->text('observacoes')->nullable();
+            $table->boolean('ocupado')->default(false);
+            $table->timestamps();          
         });
     }
 
