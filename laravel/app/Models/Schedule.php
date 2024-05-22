@@ -10,7 +10,27 @@ class Schedule extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title',
-        'date',
+        'psicologa',
+        'data',
+        'paciente',
+        'horario',
+        'tempo_de_sessao',
+        'observacoes',
+        'ocupado',
     ];
+
+    public function paciente()
+    {
+        return $this->belongsTo(User::class, 'paciente_id');
+    }
+
+    public function psicologa()
+    {
+        return $this->belongsTo(User::class, 'psicologa_id');
+    }
+
+    public function agenda()
+    {
+        return $this->belongsTo(Agenda::class);
+    }
 }
