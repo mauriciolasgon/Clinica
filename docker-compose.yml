@@ -30,9 +30,11 @@ services:
     networks:
       - app-network
 
-  
-
 volumes:
   db-data:
+
+networks:
+  app-network:
+    driver: bridge
 
 
