@@ -12,10 +12,8 @@
 
     <!-- Header Section -->
     <header class="header text-center">
-      <div class="container">
-        <h1 class="display-4">Bem-vindo à Clínica Saúde Total</h1>
-        <p class="lead">Cuidados médicos de qualidade para toda a família.</p>
-        <a href="#services" class="btn btn-light mt-3">Saiba mais</a>
+      <div class="container-fluid p-0">
+        <img src="@/Pages/images/clinicaxastre.png" alt="Banner da Clínica X-Ames Xastre" class="img-fluid banner-image" />
       </div>
     </header>
 
@@ -93,30 +91,35 @@
       </div>
     </section>
 
-    <!-- Contact Form Section -->
+    <!-- Contact Button Section -->
     <section id="contact" class="contact bg-light py-5">
-      <div class="container">
-        <h2 class="section-title text-center">Contato</h2>
-        <div class="row">
-          <div class="col-md-6 mx-auto">
-            <!-- Formulário de contato -->
-            <form @submit.prevent="submitContactForm">
-              <div class="form-group">
-                <label for="name">Nome</label>
-                <input type="text" class="form-control" id="name" v-model="form.name" required>
+      <div class="container text-center">
+        <h2 class="section-title">Contato</h2>
+        <button @click="toggleContactForm" class="btn btn-primary mt-3">Entrar em Contato</button>
+        <transition name="fade">
+          <div v-if="showContactForm" class="mt-4">
+            <div class="row">
+              <div class="col-md-6 mx-auto">
+                <!-- Formulário de contato -->
+                <form @submit.prevent="submitContactForm">
+                  <div class="form-group">
+                    <label for="name">Nome</label>
+                    <input type="text" class="form-control" id="name" v-model="form.name" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" class="form-control" id="email" v-model="form.email" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="message">Mensagem</label>
+                    <textarea class="form-control" id="message" rows="4" v-model="form.message" required></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
               </div>
-              <div class="form-group">
-                <label for="email">E-mail</label>
-                <input type="email" class="form-control" id="email" v-model="form.email" required>
-              </div>
-              <div class="form-group">
-                <label for="message">Mensagem</label>
-                <textarea class="form-control" id="message" rows="4" v-model="form.message" required></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary">Enviar</button>
-            </form>
+            </div>
           </div>
-        </div>
+        </transition>
       </div>
     </section>
 
@@ -162,7 +165,8 @@ export default {
         message: ''
       },
       showAbout: false,
-      showTestimonials: false
+      showTestimonials: false,
+      showContactForm: false
     };
   },
   methods: {
@@ -187,6 +191,9 @@ export default {
     },
     toggleTestimonials() {
       this.showTestimonials = !this.showTestimonials;
+    },
+    toggleContactForm() {
+      this.showContactForm = !this.showContactForm;
     }
   }
 };
@@ -198,9 +205,16 @@ export default {
 }
 
 .header {
-  background: #f700ff;
+  background: #fcfbfb;
   color: white;
   padding: 5rem 0;
+}
+
+.header .banner-image {
+  width: 100%;
+  height: auto;
+  max-height: 650px; /* Ajuste o valor conforme necessário */
+  object-fit: cover;
 }
 
 .services, .about, .testimonials, .contact, .info {
@@ -235,54 +249,26 @@ export default {
 .blockquote {
   border-left: 0.25rem solid hwb(311 0% 0%);
   padding-left: 1rem;
-  margin-top: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+blockquote-footer {
+  font-size: 0.8rem;
+  color: #6c757d;
 }
 
 .navbar {
-  padding: 1rem 0;
-}
-
-.navbar-brand {
-  font-size: 1.5rem;
-}
-
-.navbar .btn {
-  margin: 0;
-}
-
-.ml-auto {
-  margin-left: auto;
+  margin-bottom: 1rem;
 }
 
 .container {
   max-width: 1200px;
 }
 
-.header .container, .services .container, .about .container, .testimonials .container, .info .container, .contact .container {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
 .section-title {
   margin-bottom: 2rem;
-}
-
-.section-title h2 {
   font-size: 2.5rem;
-}
-
-.section-title p {
-  font-size: 1.25rem;
-  color: #6c757d;
-}
-
-.text-center h4 {
-  margin-bottom: 1rem;
-}
-
-.text-center p {
-  font-size: 1rem;
-  color: #6c757d;
 }
 
 .fade-enter-active, .fade-leave-active {
@@ -299,17 +285,5 @@ export default {
   padding: 2rem; /* Espaçamento interno */
   border-radius: 10px; /* Borda arredondada */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
-}
-
-.contact h2 {
-  margin-bottom: 2rem; /* Espaçamento inferior */
-}
-
-.contact .form-group {
-  margin-bottom: 1.5rem; /* Espaçamento inferior */
-}
-
-.contact button[type="submit"] {
-  width: 100%; /* Largura total */
 }
 </style>
