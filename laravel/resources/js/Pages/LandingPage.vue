@@ -3,9 +3,9 @@
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container d-flex">
-        <!-- Move o botão de login para a direita -->
+        <!-- Move o botão de login para a direita e deixe ele maior -->
         <div class="ml-auto">
-          <button @click="goToRoute('/login')" class="btn btn-secondary">Login</button>
+          <button @click="goToRoute('/login')" class="btn btn-lg btn-primary login-btn">Login</button>
         </div>
       </div>
     </nav>
@@ -43,7 +43,7 @@
     <section id="about" class="about bg-light py-5 text-center">
       <div class="container">
         <h2 class="section-title">Sobre a Clínica</h2>
-        <button @click="toggleAbout" class="btn btn-info mt-3">Ver Descrição</button>
+        <button @click="toggleAbout" class="btn btn-lg btn-primary action-btn mt-3">Ver Descrição</button>
         <transition name="fade">
           <div v-if="showAbout" class="mt-4">
             <div class="row">
@@ -63,7 +63,7 @@
     <section id="testimonials" class="testimonials py-5 text-center">
       <div class="container">
         <h2 class="section-title">Depoimentos de Pacientes</h2>
-        <button @click="toggleTestimonials" class="btn btn-info mt-3">Ver Depoimentos</button>
+        <button @click="toggleTestimonials" class="btn btn-lg btn-primary action-btn mt-3">Ver Depoimentos</button>
         <transition name="fade">
           <div v-if="showTestimonials" class="mt-4">
             <div class="row">
@@ -95,7 +95,7 @@
     <section id="contact" class="contact bg-light py-5">
       <div class="container text-center">
         <h2 class="section-title">Contato</h2>
-        <button @click="toggleContactForm" class="btn btn-primary mt-3">Entrar em Contato</button>
+        <button @click="toggleContactForm" class="btn btn-lg btn-primary action-btn mt-3">Entrar em Contato</button>
         <transition name="fade">
           <div v-if="showContactForm" class="mt-4">
             <div class="row">
@@ -213,7 +213,7 @@ export default {
 .header .banner-image {
   width: 100%;
   height: auto;
-  max-height: 650px; /* Ajuste o valor conforme necessário */
+  max-height: 100vw; /* Ajuste o valor conforme necessário */
   object-fit: cover;
 }
 
@@ -285,5 +285,35 @@ blockquote-footer {
   padding: 2rem; /* Espaçamento interno */
   border-radius: 10px; /* Borda arredondada */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+/* Estilos para o botão de login */
+.login-btn {
+  padding: 1rem 2rem; /* Aumenta o tamanho do botão */
+  font-size: 1.25rem; /* Aumenta o tamanho do texto */
+  background-color: #007bff; /* Cor de fundo personalizada */
+  color: white; /* Cor do texto */
+  border: none; /* Remove a borda */
+  border-radius: 0.5rem; /* Borda arredondada */
+  transition: background-color 0.3s ease; /* Transição suave para a cor de fundo */
+}
+
+.login-btn:hover {
+  background-color: #0056b3; /* Cor de fundo ao passar o mouse */
+}
+
+/* Estilos para os botões de ação */
+.action-btn {
+  padding: 1rem 2rem; /* Aumenta o tamanho do botão */
+  font-size: 1.25rem; /* Aumenta o tamanho do texto */
+  background-color: #007bff; /* Cor de fundo personalizada */
+  color: white; /* Cor do texto */
+  border: none; /* Remove a borda */
+  border-radius: 0.5rem; /* Borda arredondada */
+  transition: background-color 0.3s ease; /* Transição suave para a cor de fundo */
+}
+
+.action-btn:hover {
+  background-color: #0056b3; /* Cor de fundo ao passar o mouse */
 }
 </style>
