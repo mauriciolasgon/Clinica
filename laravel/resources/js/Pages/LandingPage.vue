@@ -3,19 +3,17 @@
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container d-flex">
-        <!-- Move o botão de login para a direita -->
+        <!-- Move o botão de login para a direita e deixe ele maior -->
         <div class="ml-auto">
-          <button @click="goToRoute('/login')" class="btn btn-secondary">Login</button>
+          <button @click="goToRoute('/login')" class="btn btn-lg btn-primary login-btn">Login</button>
         </div>
       </div>
     </nav>
-
+ 
     <!-- Header Section -->
     <header class="header text-center">
-      <div class="container">
-        <h1 class="display-4">Bem-vindo à Clínica Saúde Total</h1>
-        <p class="lead">Cuidados médicos de qualidade para toda a família.</p>
-        <a href="#services" class="btn btn-light mt-3">Saiba mais</a>
+      <div class="container-fluid p-0">
+        <img src="@/Pages/images/clinicaxastre.png" alt="Banner da Clínica X-Ames Xastre" class="img-fluid banner-image" />
       </div>
     </header>
 
@@ -26,15 +24,15 @@
         <p>Oferecemos uma ampla gama de serviços médicos para atender suas necessidades.</p>
         <div class="row mt-4">
           <div class="col-md-4">
-            <h4>Consulta Geral</h4>
+            <h4 class="keyword-highlight">Consulta Geral</h4>
             <p>Atendemos pacientes de todas as idades com consultas gerais e check-ups.</p>
           </div>
           <div class="col-md-4">
-            <h4>Especialidades</h4>
+            <h4 class="keyword-highlight">Especialidades</h4>
             <p>Oferecemos consultas com especialistas em diversas áreas da medicina.</p>
           </div>
           <div class="col-md-4">
-            <h4>Exames</h4>
+            <h4 class="keyword-highlight">Exames</h4>
             <p>Realizamos uma variedade de exames laboratoriais e de imagem.</p>
           </div>
         </div>
@@ -45,7 +43,7 @@
     <section id="about" class="about bg-light py-5 text-center">
       <div class="container">
         <h2 class="section-title">Sobre a Clínica</h2>
-        <button @click="toggleAbout" class="btn btn-info mt-3">Ver Descrição</button>
+        <button @click="toggleAbout" class="btn btn-lg btn-primary action-btn mt-3">Ver Descrição</button>
         <transition name="fade">
           <div v-if="showAbout" class="mt-4">
             <div class="row">
@@ -65,7 +63,7 @@
     <section id="testimonials" class="testimonials py-5 text-center">
       <div class="container">
         <h2 class="section-title">Depoimentos de Pacientes</h2>
-        <button @click="toggleTestimonials" class="btn btn-info mt-3">Ver Depoimentos</button>
+        <button @click="toggleTestimonials" class="btn btn-lg btn-primary action-btn mt-3">Ver Depoimentos</button>
         <transition name="fade">
           <div v-if="showTestimonials" class="mt-4">
             <div class="row">
@@ -93,30 +91,35 @@
       </div>
     </section>
 
-    <!-- Contact Form Section -->
+    <!-- Contact Button Section -->
     <section id="contact" class="contact bg-light py-5">
-      <div class="container">
-        <h2 class="section-title text-center">Contato</h2>
-        <div class="row">
-          <div class="col-md-6 mx-auto">
-            <!-- Formulário de contato -->
-            <form @submit.prevent="submitContactForm">
-              <div class="form-group">
-                <label for="name">Nome</label>
-                <input type="text" class="form-control" id="name" v-model="form.name" required>
+      <div class="container text-center">
+        <h2 class="section-title">Contato</h2>
+        <button @click="toggleContactForm" class="btn btn-lg btn-primary action-btn mt-3">Entrar em Contato</button>
+        <transition name="fade">
+          <div v-if="showContactForm" class="mt-4">
+            <div class="row">
+              <div class="col-md-6 mx-auto">
+                <!-- Formulário de contato -->
+                <form @submit.prevent="submitContactForm">
+                  <div class="form-group">
+                    <label for="name">Nome</label>
+                    <input type="text" class="form-control" id="name" v-model="form.name" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" class="form-control" id="email" v-model="form.email" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="message">Mensagem</label>
+                    <textarea class="form-control" id="message" rows="4" v-model="form.message" required></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
               </div>
-              <div class="form-group">
-                <label for="email">E-mail</label>
-                <input type="email" class="form-control" id="email" v-model="form.email" required>
-              </div>
-              <div class="form-group">
-                <label for="message">Mensagem</label>
-                <textarea class="form-control" id="message" rows="4" v-model="form.message" required></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary">Enviar</button>
-            </form>
+            </div>
           </div>
-        </div>
+        </transition>
       </div>
     </section>
 
@@ -126,21 +129,21 @@
         <h2 class="section-title">Informações de Contato</h2>
         <div class="row mt-4">
           <div class="col-md-4">
-            <h4>Telefone</h4>
-            <p>(11) 1234-5678</p>
+            <h4 class="keyword-highlight">Telefone</h4>
+            <p>   (11)1238   </p>
           </div>
           <div class="col-md-4">
-            <h4>E-mail</h4>
-            <p>contato@clinicasaude.com</p>
+            <h4 class="keyword-highlight">E-mail</h4>
+            <p>    Gablopes@gmail.com   </p>
           </div>
           <div class="col-md-4">
-            <h4>Endereço</h4>
-            <p>Rua da Saúde, 123, São Paulo, SP</p>
+            <h4 class="keyword-highlight">Endereço</h4>
+            <p>    Campinas uai    </p>
           </div>
         </div>
         <div class="row mt-4">
           <div class="col-md-6">
-            <h4>Horário de Funcionamento</h4>
+            <h4 class="keyword-highlight">Horário de Funcionamento</h4>
             <p>Segunda a Sexta: 8h - 18h</p>
             <p>Sábado: 8h - 12h</p>
           </div>
@@ -162,7 +165,8 @@ export default {
         message: ''
       },
       showAbout: false,
-      showTestimonials: false
+      showTestimonials: false,
+      showContactForm: false
     };
   },
   methods: {
@@ -187,6 +191,9 @@ export default {
     },
     toggleTestimonials() {
       this.showTestimonials = !this.showTestimonials;
+    },
+    toggleContactForm() {
+      this.showContactForm = !this.showContactForm;
     }
   }
 };
@@ -198,9 +205,16 @@ export default {
 }
 
 .header {
-  background: #f700ff;
+  background: #fcfbfb;
   color: white;
   padding: 5rem 0;
+}
+
+.header .banner-image {
+  width: 100%;
+  height: auto;
+  max-height: 100vw; /* Ajuste o valor conforme necessário */
+  object-fit: cover;
 }
 
 .services, .about, .testimonials, .contact, .info {
@@ -224,7 +238,7 @@ export default {
 }
 
 .bg-primary {
-  background-color: #ff00c3;
+  background-color: #1100ff;
   color: white;
 }
 
@@ -233,56 +247,28 @@ export default {
 }
 
 .blockquote {
-  border-left: 0.25rem solid hwb(311 0% 0%);
+  border-left: 0.25rem solid hwb(241 0% 0%);
   padding-left: 1rem;
-  margin-top: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+blockquote-footer {
+  font-size: 0.8rem;
+  color: #6c757d;
 }
 
 .navbar {
-  padding: 1rem 0;
-}
-
-.navbar-brand {
-  font-size: 1.5rem;
-}
-
-.navbar .btn {
-  margin: 0;
-}
-
-.ml-auto {
-  margin-left: auto;
+  margin-bottom: 1rem;
 }
 
 .container {
   max-width: 1200px;
 }
 
-.header .container, .services .container, .about .container, .testimonials .container, .info .container, .contact .container {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
 .section-title {
   margin-bottom: 2rem;
-}
-
-.section-title h2 {
   font-size: 2.5rem;
-}
-
-.section-title p {
-  font-size: 1.25rem;
-  color: #6c757d;
-}
-
-.text-center h4 {
-  margin-bottom: 1rem;
-}
-
-.text-center p {
-  font-size: 1rem;
-  color: #6c757d;
 }
 
 .fade-enter-active, .fade-leave-active {
@@ -301,15 +287,81 @@ export default {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
 }
 
-.contact h2 {
-  margin-bottom: 2rem; /* Espaçamento inferior */
+/* Estilos para o botão de login */
+.login-btn {
+  padding: 1rem 2rem; /* Aumenta o tamanho do botão */
+  font-size: 1.25rem; /* Aumenta o tamanho do texto */
+  background-color: #007bff; /* Cor de fundo personalizada */
+  color: white; /* Cor do texto */
+  border: none; /* Remove a borda */
+  border-radius: 0.5rem; /* Borda arredondada */
+  transition: background-color 0.3s ease; /* Transição suave para a cor de fundo */
 }
 
-.contact .form-group {
-  margin-bottom: 1.5rem; /* Espaçamento inferior */
+.login-btn:hover {
+  background-color: #0056b3; /* Cor de fundo ao passar o mouse */
 }
 
-.contact button[type="submit"] {
-  width: 100%; /* Largura total */
+/* Estilos para os botões de ação */
+.action-btn {
+  padding: 1rem 2rem; /* Aumenta o tamanho do botão */
+  font-size: 1.25rem; /* Aumenta o tamanho do texto */
+  background-color: #007bff; /* Cor de fundo personalizada */
+  color: white; /* Cor do texto */
+  border: none; /* Remove a borda */
+  border-radius: 0.5rem; /* Borda arredondada */
+  transition: background-color 0.3s ease; /* Transição suave para a cor de fundo */
+}
+
+.action-btn:hover {
+  background-color: #0056b3; /* Cor de fundo ao passar o mouse */
+}
+
+/* Ajustes de layout para centralizar as seções */
+.services, .about, .testimonials, .contact, .info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container > .row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container > .row > .col-md-4, .container > .row > .col-md-6 {
+  max-width: 600px;
+}
+
+.section-title {
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+/* Destaque para palavras-chave */
+.keyword-highlight {
+  font-weight: bold;
+  color: #007bff; /* Cor de destaque */
+  background-color: #e9f7ff; /* Fundo de destaque */
+  padding: 0.25rem 0.5rem; /* Espaçamento interno */
+  border-radius: 0.25rem; /* Borda arredondada */
+}
+
+/* Melhorias de estilo adicionais */
+.landing-page h2, .landing-page h4, .landing-page p {
+  color: #333;
+}
+
+.landing-page .btn-primary {
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+
+.landing-page .btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #004085;
 }
 </style>
+
