@@ -24,15 +24,15 @@
         <p>Oferecemos uma ampla gama de serviços médicos para atender suas necessidades.</p>
         <div class="row mt-4">
           <div class="col-md-4">
-            <h4>Consulta Geral</h4>
+            <h4 class="keyword-highlight">Consulta Geral</h4>
             <p>Atendemos pacientes de todas as idades com consultas gerais e check-ups.</p>
           </div>
           <div class="col-md-4">
-            <h4>Especialidades</h4>
+            <h4 class="keyword-highlight">Especialidades</h4>
             <p>Oferecemos consultas com especialistas em diversas áreas da medicina.</p>
           </div>
           <div class="col-md-4">
-            <h4>Exames</h4>
+            <h4 class="keyword-highlight">Exames</h4>
             <p>Realizamos uma variedade de exames laboratoriais e de imagem.</p>
           </div>
         </div>
@@ -129,21 +129,21 @@
         <h2 class="section-title">Informações de Contato</h2>
         <div class="row mt-4">
           <div class="col-md-4">
-            <h4>Telefone</h4>
-            <p>(11) 1234-5678</p>
+            <h4 class="keyword-highlight">Telefone</h4>
+            <p>   (11)1238   </p>
           </div>
           <div class="col-md-4">
-            <h4>E-mail</h4>
-            <p>contato@clinicasaude.com</p>
+            <h4 class="keyword-highlight">E-mail</h4>
+            <p>    Gablopes@gmail.com   </p>
           </div>
           <div class="col-md-4">
-            <h4>Endereço</h4>
-            <p>Rua da Saúde, 123, São Paulo, SP</p>
+            <h4 class="keyword-highlight">Endereço</h4>
+            <p>    Campinas uai    </p>
           </div>
         </div>
         <div class="row mt-4">
           <div class="col-md-6">
-            <h4>Horário de Funcionamento</h4>
+            <h4 class="keyword-highlight">Horário de Funcionamento</h4>
             <p>Segunda a Sexta: 8h - 18h</p>
             <p>Sábado: 8h - 12h</p>
           </div>
@@ -238,7 +238,7 @@ export default {
 }
 
 .bg-primary {
-  background-color: #ff00c3;
+  background-color: #1100ff;
   color: white;
 }
 
@@ -247,7 +247,7 @@ export default {
 }
 
 .blockquote {
-  border-left: 0.25rem solid hwb(311 0% 0%);
+  border-left: 0.25rem solid hwb(241 0% 0%);
   padding-left: 1rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
@@ -316,4 +316,52 @@ blockquote-footer {
 .action-btn:hover {
   background-color: #0056b3; /* Cor de fundo ao passar o mouse */
 }
+
+/* Ajustes de layout para centralizar as seções */
+.services, .about, .testimonials, .contact, .info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container > .row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container > .row > .col-md-4, .container > .row > .col-md-6 {
+  max-width: 600px;
+}
+
+.section-title {
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+/* Destaque para palavras-chave */
+.keyword-highlight {
+  font-weight: bold;
+  color: #007bff; /* Cor de destaque */
+  background-color: #e9f7ff; /* Fundo de destaque */
+  padding: 0.25rem 0.5rem; /* Espaçamento interno */
+  border-radius: 0.25rem; /* Borda arredondada */
+}
+
+/* Melhorias de estilo adicionais */
+.landing-page h2, .landing-page h4, .landing-page p {
+  color: #333;
+}
+
+.landing-page .btn-primary {
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+
+.landing-page .btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #004085;
+}
 </style>
+
