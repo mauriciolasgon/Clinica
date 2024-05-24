@@ -1,19 +1,37 @@
 <?php
 
-use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Mail\MyEmail;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
+    return Inertia::render('LandingPage');
+});
+
+Route::post('/api/contact', function (Request $request) {
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'message' => 'required|string',
     ]);
+
+    $name = $request->input('name');
+    $email = $request->input('email');
+    $messageContent = $request->input('message');
+
+    Mail::to('contato@clinicasaude.com')->send(new MyEmail($name, $email, $messageContent));
+
+    return response()->json(['message' => 'Email sent successfully!']);
+});
+
+Route::get('/login', function () {
+    return Inertia::render('Login'); // Substitua pelo componente correto para esta rota
 });
 
 Route::get('/dashboard', function () {
@@ -52,4 +70,3 @@ Route::get('/register-psicologa', [RegisteredUserController::class, 'createPsico
 Route::post('/register-psicologa', [RegisteredUserController::class, 'store'])->name('register.psicologa.store');
 
 require __DIR__.'/auth.php';
-
