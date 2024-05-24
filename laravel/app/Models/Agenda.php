@@ -10,7 +10,6 @@ class Agenda extends Model
     use HasFactory;
 
     protected $fillable = [
-        'schedule_id',
         'psicologa_id',
     ];
 
@@ -21,6 +20,6 @@ class Agenda extends Model
 
     public function psicologa()
     {
-        return $this->hasMany(User::class, 'psicologa_id');
+        return $this->belongsTo(User::class, 'psicologa_id');
     }
 }

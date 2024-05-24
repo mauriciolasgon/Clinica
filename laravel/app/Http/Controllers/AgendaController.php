@@ -7,6 +7,7 @@ use App\Models\Schedule;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Log;
 
 class AgendaController extends Controller
 {
@@ -23,6 +24,12 @@ class AgendaController extends Controller
         ]);
     }
 
+    public function getPsicologa()
+    {
+        $agendas = Agenda::with('psicologa')->get();
+        return response()->json($agendas);
+    }
+
     public function teste(Request $request)
     {
         $psicologa_id = $request->query('psicologa_id');
@@ -34,30 +41,41 @@ class AgendaController extends Controller
 
     public function create(Request $request)
     {
+        $schedules = Schedule::where('psicologa_id', $request->user()->id)->get();
         return Inertia::render('Agenda/Create', [
             'psicologa_id' => $request->user()->id,
+            'schedules' => $schedules
         ]);
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'data' => 'required|date',
-            'hora' => 'required|date_format:H:i',
-            'tempo_de_sessao' => 'required|integer',
-        ]);
+{
 
-        Schedule::create([
-            'psicologa_id' => $request->user()->id,
-            'data' => $request->input('data'),
-            'hora' => $request->input('hora'),
-            'tempo_de_sessao' => $request->input('tempo_de_sessao'),
-            'ocupado' => false,
-            'paciente_id' => null,
-        ]);
+    Log::info('Recebendo dados da requisição', $request->all());
 
-        return redirect()->route('agendas.index');
-    }
+    $request->validate([
+        'data' => 'required|date',
+        'horario' => 'required|date_format:H:i',
+        'tempo_sessao' => 'required|date_format:H:i:s',
+    ]);
+
+    $agenda = Agenda::firstOrCreate(
+        ['psicologa_id' => $request->user()->id],
+        ['psicologa_id' => $request->user()->id]
+    );
+
+    Schedule::create([
+        'agenda_id' => 1,
+        'psicologa_id' => $request->user()->id,
+        'data' => $request->input('data'),
+        'horario' => $request->input('horario'), 
+        'tempo_sessao' => $request->input('tempo_sessao'),
+        'ocupado' => false,
+        'paciente_id' => null,
+    ]);
+
+    return redirect()->route('agendas.index')->with('success', 'Agenda e Schedule criados com sucesso!');
+}
 
     public function edit($id)
     {

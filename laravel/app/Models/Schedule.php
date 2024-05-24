@@ -10,11 +10,12 @@ class Schedule extends Model
     use HasFactory;
 
     protected $fillable = [
-        'psicologa',
+        'agenda_id',
+        'psicologa_id',
         'data',
-        'paciente',
+        'paciente_id',
         'horario',
-        'tempo_de_sessao',
+        'tempo_sessao',
         'observacoes',
         'ocupado',
     ];

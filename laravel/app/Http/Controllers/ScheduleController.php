@@ -37,19 +37,24 @@ class ScheduleController extends Controller
     }
 
     public function store(Request $request)
+
+
+
+
     {
         $request->validate([
-            'psicologa_id' => 'required|integer|exists:users,id',
+            
+            'psicologa_id' => 'required|exists:users,id',
             'data' => 'required|date',
-            'paciente_id' => 'required|integer|exists:users,id',
-            'tempo_de_sessao' => 'required|integer',
+            'horario' => 'required|date_format:H:i',
+            'tempo_sessao' => 'required|date_format:H:i:s',
             'observacoes' => 'nullable|string',
-            'ocupado' => 'required|boolean'
+            'ocupado' => 'required|boolean',
         ]);
 
         Schedule::create($request->all());
 
-        return redirect()->route('schedule.index');
+        return redirect()->route('agendas.index')->with('success', 'Schedule criado com sucesso!');
     }
 
     public function edit($id)

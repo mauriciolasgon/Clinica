@@ -53,6 +53,15 @@ import { Head,Link } from '@inertiajs/vue3';
             </Link>
         
         </div>
+        <div v-if="$page.props.auth.user.role == 1">
+            <Link
+                :href="route('schedule.index')"
+                 class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+                >
+                Marcar Consulta
+            </Link>
+        
+        </div>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">

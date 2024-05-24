@@ -16,6 +16,7 @@ const form = useForm({
     address: '',
     city: '',
     state: '',
+    role: 1,
 });
 
 const submit = () => {

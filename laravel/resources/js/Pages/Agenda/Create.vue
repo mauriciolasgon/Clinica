@@ -1,87 +1,68 @@
-<script setup>
+<script>
+import { ref } from 'vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 
-const form = useForm({
-    data: '',
-    hora: '',
-    tempo_de_sessao: '',
-});
-
-const submit = () => {
-    form.post(route('agendas.store'), {
-        onSuccess: () => form.reset(),
-    });
+export default {
+    data() {
+        return {
+            form: {
+                psicologa_id: '',
+                agenda_id: '',
+                data: '',
+                horario: '',
+                tempo_sessao: '', 
+                ocupado: 1,
+            },
+        };
+    },
+    methods: {
+        submitAgendaForm() {
+            this.form.psicologa_id = usePage().props.auth.user.id;
+            if (this.form.tempo_sessao.length === 5) {
+                this.form.tempo_sessao += ':00';
+            }
+            console.log('Dados do formulário antes do envio:', this.form);
+            this.$inertia.post(route('agendas.store'), this.form, {
+                onSuccess: () => {
+                    alert('Sessão adicionada com sucesso!');
+                    this.$router.push('/agendas/index');
+                },
+                onError: (errors) => {
+                    console.error(errors);
+                }
+            });
+        },
+    },
 };
 </script>
 
 <template>
-    <AuthenticatedLayout>
-        <Head title="Criar Agendamento" />
+  <AuthenticatedLayout>
+    <template #header>
+      <h2 class="font-semibold text-xl text-gray-800 leading-tight">Dashboard do Psicólogo</h2>
+    </template>
 
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900 dark:text-gray-100">
-                        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Criar Agendamento</h2>
+    <div class="container mx-auto p-4">
+      <h1 class="text-3xl font-bold mb-4">Adicionar Sessão</h1>
 
-                        <form @submit.prevent="submit">
-                            <div>
-                                <label for="data" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Data</label>
-                                <input
-                                    id="data"
-                                    type="date"
-                                    v-model="form.data"
-                                    class="mt-1 block w-full"
-                                    required
-                                />
-                                <div v-if="form.errors.data" class="text-red-600 text-sm mt-1">{{ form.errors.data }}</div>
-                            </div>
-
-                            <div class="mt-4">
-                                <label for="hora" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Horário</label>
-                                <input
-                                    id="hora"
-                                    type="time"
-                                    v-model="form.hora"
-                                    class="mt-1 block w-full"
-                                    required
-                                />
-                                <div v-if="form.errors.hora" class="text-red-600 text-sm mt-1">{{ form.errors.hora }}</div>
-                            </div>
-
-                            <div class="mt-4">
-                                <label for="tempo_de_sessao" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Duração (minutos)</label>
-                                <input
-                                    id="tempo_de_sessao"
-                                    type="number"
-                                    v-model="form.tempo_de_sessao"
-                                    class="mt-1 block w-full"
-                                    required
-                                />
-                                <div v-if="form.errors.tempo_de_sessao" class="text-red-600 text-sm mt-1">{{ form.errors.tempo_de_sessao }}</div>
-                            </div>
-
-                            <div class="flex items-center justify-end mt-4">
-                                <Link
-                                    :href="route('agendas.index')"
-                                    class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                                >
-                                    Voltar
-                                </Link>
-
-                                <button
-                                    type="submit"
-                                    class="ml-4 inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 active:bg-blue-700 focus:outline-none focus:border-blue-700 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150"
-                                    :disabled="form.processing"
-                                >
-                                    Salvar
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+      <form @submit.prevent="submitAgendaForm">
+        <div class="mb-4">
+          <label for="data" class="block text-gray-700">Data</label>
+          <input id="data" v-model="form.data" type="date" class="mt-1 block w-full" required>
         </div>
-    </AuthenticatedLayout>
+        <div class="mb-4">
+          <label for="horario" class="block text-gray-700">Hora</label>
+          <input id="horario" v-model="form.horario" type="time" class="mt-1 block w-full" required>
+        </div>
+        <div class="mb-4">
+          <label for="tempo_sessao" class="block text-gray-700">Duração (HH:mm)</label>
+          <input id="tempo_sessao" v-model="form.tempo_sessao" type="time" class="mt-1 block w-full" required>
+        </div>
+        <div class="mt-4">
+          <button type="submit" class="px-4 py-2 bg-blue-500 text-white">Adicionar Sessão</button>
+        </div>
+      </form>
+    </div>
+  </AuthenticatedLayout>
 </template>

@@ -35,15 +35,17 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{schedule}', [ScheduleController::class, 'destroy'])->name('schedule.destroy');
     });
 
-    Route::middleware('auth')->group(function () {
-        Route::prefix('agendas')->group(function () {
-            Route::get('/', [AgendaController::class, 'index'])->name('agendas.index');
-            Route::get('/create', [AgendaController::class, 'create'])->name('agendas.create');
-            Route::post('/', [AgendaController::class, 'store'])->name('agendas.store');
-            Route::get('/{agenda}/edit', [AgendaController::class, 'edit'])->name('agendas.edit');
-        });
+    Route::get('/psicologa', [PsicologaController::class, 'index']);
+
+    Route::prefix('agendas')->group(function () {
+        Route::get('/', [AgendaController::class, 'index'])->name('agendas.index');
+        Route::get('/agendas/psicologa', [AgendaController::class, 'getPsicologa']);
+        Route::get('/agendas', [AgendaController::class, 'teste']);
+        Route::get('/create', [AgendaController::class, 'create'])->name('agendas.create');
+        Route::post('/', [AgendaController::class, 'store'])->name('agendas.store');
+        Route::get('/{agenda}/edit', [AgendaController::class, 'edit'])->name('agendas.edit');
+        Route::patch('/{agenda}/marcar-ocupado', [AgendaController::class, 'marcarOcupado'])->name('agendas.marcar-ocupado');
     });
-    
 });
 
 Route::get('/register-psicologa', [RegisteredUserController::class, 'createPsicologa'])->name('register.psicologa');
