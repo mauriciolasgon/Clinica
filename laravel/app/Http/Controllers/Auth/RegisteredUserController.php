@@ -42,14 +42,32 @@ class RegisteredUserController extends Controller
             'email' => 'required|string|lowercase|email|max:255|unique:users',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'role' => 'required|integer',
-        ]);
+            'numero_cel', // Add validation rules for these fields if needed
+            'cep',
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => $request->role,
         ]);
+        if($request->role == 2){
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role' => $request->role,         
+            ]);
+        }
+        else{
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role' => $request->role,
+                'numero_cel' => $request->numero_cel, // Insert the values for these fields
+                'cep' => $request->cep,
+         
+            ]);
+
+        }
+       
+        
 
         event(new Registered($user));
 
