@@ -4,36 +4,28 @@ import axios from 'axios';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link, usePage } from '@inertiajs/vue3';
 
+const {props} = usePage();
 const agendas = ref([]);
+const psico_id = usePage().props.auth.user.id;
 const psychologistSchedule = ref([]);
 
-const psico_id = usePage().props.auth.user.id;
-
-const fetchAgendas = async () => {
-    try {
-        const response = await axios.get('/agendas/agendas', {
-            params: { psicologa_id: psico_id }
-        });
-        agendas.value = response.data;
-        console.log
-    } catch (error) {
-        console.error('Error fetching agendas:', error);
-    }
-};
 
 const fetchPsychologistSchedule = async () => {
+
     try {
         const response = await axios.get('/schedule/schedule', {
             params: { psicologa_id: psico_id }
         });
         psychologistSchedule.value = response.data;
+        
+    
     } catch (error) {
         console.error('Error fetching psychologist schedule:', error);
     }
 };
 
+
 onMounted(() => {
-    fetchAgendas();
     fetchPsychologistSchedule();
 });
 </script>

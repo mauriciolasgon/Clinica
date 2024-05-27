@@ -14,7 +14,7 @@ class AgendaController extends Controller
 
     public function index(Request $request)
     {
-        $agendas = Agenda::with(['schedules', 'schedules.paciente'])
+        $agendas = Schedule::with(['psicologa', 'paciente'])
             ->where('psicologa_id', $request->user()->id)
             ->get();
 
@@ -59,19 +59,14 @@ class AgendaController extends Controller
         'tempo_sessao' => 'required|date_format:H:i:s',
     ]);
 
-    $agenda = Agenda::firstOrCreate(
-        ['psicologa_id' => $request->user()->id],
-        ['psicologa_id' => $request->user()->id]
-    );
-
     Schedule::create([
-        'agenda_id' => 1,
         'psicologa_id' => $request->user()->id,
         'data' => $request->input('data'),
         'horario' => $request->input('horario'), 
         'tempo_sessao' => $request->input('tempo_sessao'),
         'ocupado' => false,
         'paciente_id' => null,
+        'ficha_id'=>0,
     ]);
 
     return redirect()->route('agendas.index')->with('success', 'Agenda e Schedule criados com sucesso!');
