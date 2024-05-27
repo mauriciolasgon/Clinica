@@ -18,6 +18,7 @@ class Schedule extends Model
         'tempo_sessao',
         'observacoes',
         'ocupado',
+        'ficha_id',
     ];
 
     public function paciente()
