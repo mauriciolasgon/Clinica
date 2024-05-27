@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Schedule;
 use App\Models\User;
+use App\Models\Ficha;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -37,10 +38,6 @@ class ScheduleController extends Controller
     }
 
     public function store(Request $request)
-
-
-
-
     {
         $request->validate([
             
@@ -65,20 +62,43 @@ class ScheduleController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request,$schedule_id)
     {
-        $request->validate([
-            'data' => 'required|date',
-            'paciente_id' => 'required|integer|exists:users,id',
-            'tempo_de_sessao' => 'required|integer',
-            'observacoes' => 'nullable|string',
-            'ocupado' => 'required|boolean'
-        ]);
+        try {
+            $request->validate([
+                'paciente_id' => 'required|integer|exists:users,id',
+                'ocupado' => 'required|boolean'
+            ]);
+    
+            $schedule = Schedule::findOrFail($schedule_id);
+            $ficha=Ficha::create([
+                'paciente_id' => $request->user()->id,
+                'paciente_name'=>$request->user()->name,
+                'email'=>$request->user()->email,
+                'cep'=>$request->user()->cep, 
+                'numero_cel'=>$request->user()->numero_cel,
+                'genero'=>null,
+                'data_atendimento'=>$schedule->data,
+                'queixa'=>null,
+                'atestado'=>null,
+                'encaminhamentos'=>null,
+                'diagnostico'=>null
+            ]);
+            $schedule->update([
+                'paciente_id' => $request->user()->id,
+                'ocupado' =>true,
+                'ficha_id'=>$ficha->id,
+            ]);
 
-        $schedule = Schedule::findOrFail($id);
-        $schedule->update($request->all());
+            
+    
+            return redirect()->route('schedule.paciente');
 
-        return redirect()->route('schedule.index');
+        } catch (\Exception $e) {
+            // Se ocorrer algum erro durante o processo, retorne uma resposta de erro com detalhes
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+        
     }
 
     public function destroy($id)
@@ -87,5 +107,16 @@ class ScheduleController extends Controller
         $schedule->delete();
 
         return redirect()->route('schedule.index');
+    }
+
+    public function pacient_schedule(Request $request)
+    {
+        $agendamentos = Schedule::with('paciente','ficha')
+            ->where('paciente_id', $request->user()->id)
+            ->get();
+
+        return Inertia::render('Schedule/Paciente', [
+            'agendamentos' => $agendamentos
+        ]);
     }
 }

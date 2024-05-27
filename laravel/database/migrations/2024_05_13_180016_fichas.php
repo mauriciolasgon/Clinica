@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('paciente_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->string('paciente_name')->nullable();
-            $table->string('email')->unique()->nullable();
+            $table->string('email')->nullable();
             $table->string('cep')->nullable();
             $table->string('numero_cel')->nullable();
             $table->string('genero')->nullable();

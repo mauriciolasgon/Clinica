@@ -66,7 +66,7 @@ class AgendaController extends Controller
         'tempo_sessao' => $request->input('tempo_sessao'),
         'ocupado' => false,
         'paciente_id' => null,
-        'ficha_id'=>0,
+        'ficha_id'=>null,
     ]);
 
     return redirect()->route('agendas.index')->with('success', 'Agenda e Schedule criados com sucesso!');

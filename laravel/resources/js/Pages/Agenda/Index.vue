@@ -17,8 +17,6 @@ const fetchPsychologistSchedule = async () => {
             params: { psicologa_id: psico_id }
         });
         psychologistSchedule.value = response.data;
-        
-    
     } catch (error) {
         console.error('Error fetching psychologist schedule:', error);
     }
@@ -39,16 +37,12 @@ onMounted(() => {
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
                         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Agenda</h2>
-                        <ul>
-                            <li v-for="agenda in agendas" :key="agenda.id" class="mt-4">
-                                <ul>
-                                    <li v-for="schedule in agenda.schedules" :key="schedule.id">
-                                        <span><span v-if="schedule.paciente">{{ schedule.paciente.name }}</span> - {{ schedule.data }} - {{ schedule.horario }} - horario - {{ schedule.tempo_sessao }} mins - {{ schedule.ocupado ? 'Disponível' : 'Ocupado' }}</span>
-                                        <Link :href="route('schedule.edit', schedule.id)" class="ml-4 text-blue-600">Editar</Link>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
+                            <ul>
+                                <li v-for="schedule in psychologistSchedule" :key="schedule.id">
+                                    <span><span v-if="schedule.paciente">{{ schedule.paciente.name }}</span> - {{ schedule.data }} - {{ schedule.horario }} - horario - {{ schedule.tempo_sessao }} mins - {{ schedule.ocupado ? 'Ocupado' : 'Disponível' }}</span>
+                                    <Link :href="route('schedule.edit', schedule.id)" class="ml-4 text-blue-600">Editar</Link>
+                                </li>
+                            </ul>
                         <Link
                             :href="route('agendas.create')"
                             class="mt-6 inline-block px-4 py-2 bg-blue-600 text-white rounded-md"
@@ -61,7 +55,7 @@ onMounted(() => {
                         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Agenda Completa da Psicóloga</h2>
                         <ul>
                             <li v-for="entry in psychologistSchedule" :key="entry.id" class="mt-4">
-                                <span>{{ entry.data }} - {{ entry.horario }} - {{ entry.tempo_sessao }} mins - {{ entry.ocupado ? 'Disponível' : 'ocupado' }} </span>
+                                <span>{{ entry.data }} - {{ entry.horario }} - {{ entry.tempo_sessao }} mins - {{ entry.ocupado ? 'Ocupado' : 'Disponível' }} </span>
                             </li>
                         </ul>
                     </div>

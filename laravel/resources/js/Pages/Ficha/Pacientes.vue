@@ -14,10 +14,7 @@ const fetchPsychologistSchedule = async () => {
             params: { psicologa_id: psico_id }
         });
         psychologistSchedule.value = response.data;
-    
-    
-        
-        
+        console.log(psychologistSchedule);
     } catch (error) {
         console.error('Error fetching psychologist schedule:', error);
     }
@@ -37,9 +34,9 @@ onMounted(() => {
     <h1 class="page-title">Pacientes</h1>
     <ul class="patient-list">
       <li v-for="agendamento in psychologistSchedule" :key="agendamento.id" class="patient-item">
-        <div class="patient-info">
+        <div class="patient-info" v-if="agendamento.paciente !==null">
           <div>
-            <span class="patient-name">{{ agendamento.paciente.name }}</span>
+            <span class="patient-name" >{{ agendamento.paciente.name }}</span>
             <span class="session-date">Data da sessão: {{ agendamento.data }}</span>
           </div>
           <Link :href="route('ficha', { data: agendamento })" class="view-ficha-link">Ver Ficha</Link>

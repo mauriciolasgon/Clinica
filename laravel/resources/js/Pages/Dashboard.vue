@@ -23,12 +23,6 @@ import { Head,Link } from '@inertiajs/vue3';
             >
                 Register Psicologa
             </Link>
-            <Link
-                :href="route('schedule.index')"
-                class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
-            >
-                Schedule
-            </Link>
             
         </div>
 
@@ -38,12 +32,6 @@ import { Head,Link } from '@inertiajs/vue3';
                 class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
             >
                 Pacientes
-            </Link>
-            <Link
-                :href="route('schedule.index')"
-                class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
-            >
-                Schedule
             </Link>
             <Link
                 :href="route('agendas.index')"
@@ -60,7 +48,12 @@ import { Head,Link } from '@inertiajs/vue3';
                 >
                 Marcar Consulta
             </Link>
-        
+            <Link
+                :href="route('schedule.paciente')"
+                 class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+                >
+                Meus agendamentos
+            </Link>
         </div>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">

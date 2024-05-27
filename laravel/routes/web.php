@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 
 use App\Http\Controllers\FichaController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\AgendaController;
+
 use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -45,15 +47,16 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-
     Route::prefix('schedule')->group(function () {
         Route::get('/', [ScheduleController::class, 'index'])->name('schedule.index');
         Route::get('/schedule', [ScheduleController::class, 'getSchedule'])->name('getSchedule');
         Route::get('/create', [ScheduleController::class, 'create'])->name('schedule.create');
         Route::post('/', [ScheduleController::class, 'store'])->name('schedule.store');
         Route::get('/{schedule}/edit', [ScheduleController::class, 'edit'])->name('schedule.edit');
-        Route::put('/{schedule}', [ScheduleController::class, 'update'])->name('schedule.update');
         Route::delete('/{schedule}', [ScheduleController::class, 'destroy'])->name('schedule.destroy');
+        Route::post('/update/{schedule_id}', [ScheduleController::class, 'update'])->name('schedule.update');
+        Route::get('/schedulePaciente', [ScheduleController::class, 'pacient_schedule'])->name('schedule.paciente');
+
     });
 
     Route::get('/psicologa', [PsicologaController::class, 'index']);
