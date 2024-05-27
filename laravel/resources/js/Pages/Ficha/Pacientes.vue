@@ -33,12 +33,15 @@ onMounted(() => {
 </script>
 
 <template>
-  <div  class="container">
+  <div class="container">
     <h1 class="page-title">Pacientes</h1>
     <ul class="patient-list">
       <li v-for="agendamento in psychologistSchedule" :key="agendamento.id" class="patient-item">
         <div class="patient-info">
-          <span class="patient-name">{{ agendamento.paciente.name }}</span> 
+          <div>
+            <span class="patient-name">{{ agendamento.paciente.name }}</span>
+            <span class="session-date">Data da sessão: {{ agendamento.data }}</span>
+          </div>
           <Link :href="route('ficha', { data: agendamento })" class="view-ficha-link">Ver Ficha</Link>
         </div>
       </li>
@@ -48,9 +51,9 @@ onMounted(() => {
 
 <style scoped>
 .container {
-  max-width: 800px; /* Define a largura máxima do container */
-  margin: 0 auto; /* Centraliza o container horizontalmente */
-  padding: 0 20px; /* Adiciona um espaço nas laterais */
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .page-title {
@@ -60,6 +63,7 @@ onMounted(() => {
   border-bottom: 1px solid #007bff;
   padding-bottom: 5px;
 }
+
 .patient-list {
   list-style: none;
   padding: 0;
@@ -82,6 +86,13 @@ onMounted(() => {
   font-weight: bold;
 }
 
+.session-date {
+  font-style: italic;
+  color: #666;
+  margin-top: 10px; /* Ajuste o espaçamento superior */
+  margin-left: 50px; /* Ajuste o espaçamento superior */
+}
+
 .view-ficha-link {
   padding: 5px 10px;
   background-color: #007bff;
@@ -96,4 +107,5 @@ onMounted(() => {
   background-color: #0056b3;
 }
 </style>
-  
+
+
