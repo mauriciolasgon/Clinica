@@ -10,7 +10,8 @@ class Ficha extends Model
     use HasFactory;
 
     protected $fillable = [
-        'paciente',
+        'paciente_id',
+        'paciente_name',
         'email',
         'numero_cel',
         'cep',
@@ -23,8 +24,5 @@ class Ficha extends Model
     ];
 
 
-    public function schedule()
-    {
-        return $this->hasOne(Schedule::class);
-    }
+
 }

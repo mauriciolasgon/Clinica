@@ -22,7 +22,7 @@ class CreateSchedulesTable extends Migration
             $table->time('tempo_sessao');
             $table->text('observacoes')->nullable();
             $table->boolean('ocupado')->default(false);
-            $table->foreignId('ficha_id')->constrained('fichas')->onDelete('cascade');
+            $table->foreignId('ficha_id')->constrained('fichas')->onDelete('cascade')->nullable();;
             $table->timestamps();          
         });
     }

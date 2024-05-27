@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('fichas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('paciente')->nullable()->constrained('users')->onDelete('cascade');
+            $table->foreignId('paciente_id')->nullable()->constrained('users')->onDelete('cascade');
+            $table->string('paciente_name')->nullable();
             $table->string('email')->unique()->nullable();
             $table->string('cep')->nullable();
             $table->string('numero_cel')->nullable();
