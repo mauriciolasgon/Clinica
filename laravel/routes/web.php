@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\AgendaController;
+
+use App\Http\Controllers\FichaController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Foundation\Application;
@@ -44,9 +45,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+
     Route::prefix('schedule')->group(function () {
         Route::get('/', [ScheduleController::class, 'index'])->name('schedule.index');
-        Route::get('/schedule', [ScheduleController::class, 'getSchedule']);
+        Route::get('/schedule', [ScheduleController::class, 'getSchedule'])->name('getSchedule');
         Route::get('/create', [ScheduleController::class, 'create'])->name('schedule.create');
         Route::post('/', [ScheduleController::class, 'store'])->name('schedule.store');
         Route::get('/{schedule}/edit', [ScheduleController::class, 'edit'])->name('schedule.edit');
@@ -69,5 +71,12 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/register-psicologa', [RegisteredUserController::class, 'createPsicologa'])->name('register.psicologa');
 Route::post('/register-psicologa', [RegisteredUserController::class, 'store'])->name('register.psicologa.store');
+
+// Ficha pacientes
+Route::get('/pacientes', [FichaController::class, 'index'])->name('pacientes');
+Route::get('/ficha', [FichaController::class, 'ficha'])->name('ficha');
+Route::post('/attFicha', [FichaController::class, 'attFicha'])->name('atualizarFicha');
+
+
 
 require __DIR__.'/auth.php';

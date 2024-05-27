@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Schedule;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -10,24 +11,23 @@ class ScheduleController extends Controller
 {
     public function index(Request $request)
     {
-        $schedules = Schedule::with('paciente')
-            ->where('psicologa_id', $request->user()->id)
-            ->get();
+       
+        $psicologas=User::where('role',2)->get();
 
         return Inertia::render('Schedule/Index', [
-            'schedules' => $schedules,
-            'psicologa_id' => $request->user()->id
+            'psicologas' => $psicologas
         ]);
     }
 
     public function getSchedule(Request $request)
     {
         $psicologa_id = $request->query('psicologa_id');
-        $schedules = Schedule::with('paciente')
+        $schedules = Schedule::with('paciente','ficha')
             ->where('psicologa_id', $psicologa_id)
             ->get();
         return response()->json($schedules);
     }
+    
 
     public function create(Request $request)
     {

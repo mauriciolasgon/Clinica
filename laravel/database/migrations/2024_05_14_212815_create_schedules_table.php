@@ -15,7 +15,6 @@ class CreateSchedulesTable extends Migration
     {
         Schema::create('schedules', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('agenda_id')->constrained('agendas')->onDelete('cascade');
             $table->foreignId('paciente_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->foreignId('psicologa_id')->constrained('users')->onDelete('cascade');
             $table->date('data');
@@ -23,6 +22,7 @@ class CreateSchedulesTable extends Migration
             $table->time('tempo_sessao');
             $table->text('observacoes')->nullable();
             $table->boolean('ocupado')->default(false);
+            $table->foreignId('ficha_id')->constrained('fichas')->onDelete('cascade')->nullable();;
             $table->timestamps();          
         });
     }

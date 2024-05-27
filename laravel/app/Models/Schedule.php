@@ -31,8 +31,8 @@ class Schedule extends Model
         return $this->belongsTo(User::class, 'psicologa_id');
     }
 
-    public function agenda()
+    public function ficha()
     {
-        return $this->belongsTo(Agenda::class);
+        return $this->belongsTo(Ficha::class,'ficha_id');
     }
 }
