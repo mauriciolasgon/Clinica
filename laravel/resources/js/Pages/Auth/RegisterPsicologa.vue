@@ -25,9 +25,15 @@ const submit = () => {
     <GuestLayout>
         <Head title="Register Psicóloga" />
 
-        <form @submit.prevent="submit">
+        <Link :href="route('dashboard')" class="btn btn-secondary mb-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">
+            Voltar
+        </Link>
+
+        <form @submit.prevent="submit" class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-2xl font-bold mb-6">Registro de Psicóloga</h2>
+
             <div>
-                <InputLabel for="name" value="Name" />
+                <InputLabel for="name" value="Nome" />
                 <TextInput
                     id="name"
                     type="text"
@@ -54,7 +60,7 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password" value="Password" />
+                <InputLabel for="password" value="Senha" />
                 <TextInput
                     id="password"
                     type="password"
@@ -67,7 +73,7 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password_confirmation" value="Confirm Password" />
+                <InputLabel for="password_confirmation" value="Confirmar Senha" />
                 <TextInput
                     id="password_confirmation"
                     type="password"
@@ -79,16 +85,16 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.password_confirmation" />
             </div>
 
-            <div class="flex items-center justify-end mt-4">
+            <div class="flex items-center justify-end mt-6">
                 <Link
                     :href="route('login')"
-                    class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                    Already registered?
+                    Já registrado?
                 </Link>
 
                 <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Register
+                    Registrar
                 </PrimaryButton>
             </div>
         </form>

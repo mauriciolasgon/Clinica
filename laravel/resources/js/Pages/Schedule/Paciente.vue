@@ -1,5 +1,6 @@
 <template>
   <div class="paciente-container">
+    <button @click="voltar" class="back-button">Voltar</button>
     <h1 class="paciente-title">Agendamentos</h1>
 
     <div class="buttons-container">
@@ -49,6 +50,7 @@
     </div>
   </div>
 </template>
+
 <script setup>
 import { ref, computed } from 'vue';
 import { usePage } from '@inertiajs/vue3';
@@ -92,88 +94,108 @@ const exibirHistorico = () => {
 const acessarFicha = (agendamento) => {
   window.location.href = route('ficha', { data: agendamento });
 };
+
+const voltar = () => {
+  window.history.back();
+};
 </script>
+
 <style scoped>
 .paciente-container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 30px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.back-button {
+  background-color: #4a90e2;
+  color: #ffffff;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 25px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.back-button:hover {
+  opacity: 0.8;
 }
 
 .paciente-title {
-    font-size: 36px;
-    margin-bottom: 20px;
-    color: #333333;
-    text-align: center;
+  font-size: 36px;
+  margin-bottom: 20px;
+  color: #333333;
+  text-align: center;
 }
 
 .buttons-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
 .toggle-button {
-    background-color: #4a90e2;
-    color: #ffffff;
-    border: none;
-    border-radius: 25px;
-    padding: 12px 25px;
-    margin: 0 10px;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
+  background-color: #4a90e2;
+  color: #ffffff;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 25px;
+  margin: 0 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .toggle-button:hover {
-    opacity: 0.8;
+  opacity: 0.8;
 }
 
 .section-title {
-    font-size: 24px;
-    margin: 20px 0 10px;
-    color: #333333;
-    text-align: left;
+  font-size: 24px;
+  margin: 20px 0 10px;
+  color: #333333;
+  text-align: left;
 }
 
 .agendamentos-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .agendamento-item {
-    margin-bottom: 15px;
-    padding: 15px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
+  margin-bottom: 15px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
 }
 
 .paciente-name {
-    font-weight: bold;
-    color: #333333;
+  font-weight: bold;
+  color: #333333;
 }
 
 .agendamento-details {
-    display: block;
-    margin-top: 5px;
-    color: #666666;
+  display: block;
+  margin-top: 5px;
+  color: #666666;
 }
 
 .view-ficha-button {
-    margin-top: 10px;
-    background-color: #4a90e2;
-    color: #ffffff;
-    border: none;
-    border-radius: 25px;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
+  margin-top: 10px;
+  background-color: #4a90e2;
+  color: #ffffff;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .view-ficha-button:hover {
-    opacity: 0.8;
+  opacity: 0.8;
 }
 </style>

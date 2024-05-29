@@ -1,32 +1,29 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head,Link } from '@inertiajs/vue3';
-
+import { Head, Link } from '@inertiajs/vue3';
 </script>
 
 <template>
-    <div class="dashboard-container">
-        <h1 class="dashboard-title">Dashboard</h1>
+    <AuthenticatedLayout>
+        <Head title="Dashboard" />
 
-        <AuthenticatedLayout>
-            <template #header>
+        <div class="dashboard-container">
+            <header class="dashboard-header">
+                <h1 class="dashboard-title">Dashboard</h1>
                 <h2 class="dashboard-subtitle">Bem-vindo</h2>
-            </template>
+            </header>
 
-            <div class="dashboard-actions">
-                <div v-if="$page.props.auth.user.role == 3" class="action-group">
+            <section class="dashboard-actions">
+                <div v-if="$page.props.auth.user.role == 3" class="action-group-horizontal">
                     <Link :href="route('register')" class="btn btn-primary">
                         Registrar
                     </Link>
                     <Link :href="route('register.psicologa')" class="btn btn-primary">
                         Registrar Psicóloga
                     </Link>
-            <Link
-                :href="route('schedule.consulta')"
-                class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
-            >
-                Visualizar consultas
-            </Link>
+                    <Link :href="route('schedule.consulta')" class="btn btn-primary">
+                        Visualizar Consultas
+                    </Link>
                 </div>
 
                 <div v-if="$page.props.auth.user.role == 2" class="action-group">
@@ -46,17 +43,17 @@ import { Head,Link } from '@inertiajs/vue3';
                         Meus Agendamentos
                     </Link>
                 </div>
-            </div>
+            </section>
 
-            <div class="welcome-message">
+            <section class="welcome-message">
                 <p>
                     Bem-vindo à Clínica de Psicologia Xastre X-Ames.<br>
                     Estamos comprometidos em proporcionar um ambiente acolhedor e profissional para atender às suas necessidades emocionais e psicológicas.<br>
                     Nossa equipe está dedicada a oferecer o melhor atendimento e suporte para seu bem-estar.
                 </p>
-            </div>
-        </AuthenticatedLayout>
-    </div>
+            </section>
+        </div>
+    </AuthenticatedLayout>
 </template>
 
 <style scoped>
@@ -69,18 +66,20 @@ import { Head,Link } from '@inertiajs/vue3';
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
+.dashboard-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
 .dashboard-title {
     font-size: 36px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     color: #333333;
-    text-align: center;
 }
 
 .dashboard-subtitle {
     font-size: 28px;
-    margin-bottom: 20px;
     color: #555555;
-    text-align: center;
 }
 
 .dashboard-actions {
@@ -88,6 +87,14 @@ import { Head,Link } from '@inertiajs/vue3';
     flex-direction: column;
     align-items: center;
     margin-bottom: 30px;
+}
+
+.action-group-horizontal {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 .action-group {
@@ -104,7 +111,7 @@ import { Head,Link } from '@inertiajs/vue3';
     text-decoration: none;
     font-size: 16px;
     margin: 5px 0;
-    transition: background-color 0.3s, color 0.3s;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
 }
 
 .btn-primary {
@@ -119,6 +126,7 @@ import { Head,Link } from '@inertiajs/vue3';
 
 .btn:hover {
     opacity: 0.8;
+    transform: translateY(-2px);
 }
 
 .welcome-message {

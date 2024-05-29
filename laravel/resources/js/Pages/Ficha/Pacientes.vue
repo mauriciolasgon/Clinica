@@ -1,9 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-
+import axios from 'axios';
 import { Link, usePage } from '@inertiajs/vue3';
-
-
 
 const psico_id = usePage().props.auth.user.id;
 const psychologistSchedule = ref([]);
@@ -20,23 +18,24 @@ const fetchPsychologistSchedule = async () => {
     }
 };
 
-
-
 onMounted(() => {
     fetchPsychologistSchedule();
 });
 
-
+const voltar = () => {
+    window.history.back();
+};
 </script>
 
 <template>
   <div class="container">
+    <button @click="voltar" class="back-button">Voltar</button>
     <h1 class="page-title">Pacientes</h1>
     <ul class="patient-list">
       <li v-for="agendamento in psychologistSchedule" :key="agendamento.id" class="patient-item">
-        <div class="patient-info" v-if="agendamento.paciente !==null">
+        <div class="patient-info" v-if="agendamento.paciente !== null">
           <div>
-            <span class="patient-name" >{{ agendamento.paciente.name }}</span>
+            <span class="patient-name">{{ agendamento.paciente.name }}</span>
             <span class="session-date">Data da sessão: {{ agendamento.data }}</span>
           </div>
           <Link :href="route('ficha', { data: agendamento })" class="view-ficha-link">Ver Ficha</Link>
@@ -51,6 +50,21 @@ onMounted(() => {
   max-width: 800px;
   margin: 0 auto;
   padding: 0 20px;
+}
+
+.back-button {
+  background-color: #4a90e2;
+  color: #ffffff;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 25px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.back-button:hover {
+  opacity: 0.8;
 }
 
 .page-title {
@@ -104,5 +118,3 @@ onMounted(() => {
   background-color: #0056b3;
 }
 </style>
-
-

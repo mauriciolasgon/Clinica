@@ -44,16 +44,11 @@ const fetchAddress = async () => {
 };
 
 const formatPhoneNumber = (value) => {
- 
     const cleaned = value.replace(/\D/g, '');
-    
- 
     const match = cleaned.match(/^(\d{2})(\d{5})(\d{4})$/);
     if (match) {
         return `(${match[1]}) ${match[2]}-${match[3]}`;
     }
-    
-
     return value;
 };
 </script>
@@ -62,9 +57,15 @@ const formatPhoneNumber = (value) => {
     <GuestLayout>
         <Head title="Register" />
 
-        <form @submit.prevent="submit">
+        <Link :href="route('dashboard')" class="btn btn-secondary mb-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">
+            Voltar
+        </Link>
+
+        <form @submit.prevent="submit" class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-2xl font-bold mb-6">Registro</h2>
+
             <div>
-                <InputLabel for="name" value="Name" />
+                <InputLabel for="name" value="Nome" />
                 <TextInput
                     id="name"
                     type="text"
@@ -89,6 +90,7 @@ const formatPhoneNumber = (value) => {
                 />
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
+
             <div class="mt-4">
                 <InputLabel for="numero_cel" value="Celular" />
                 <TextInput
@@ -100,11 +102,11 @@ const formatPhoneNumber = (value) => {
                     autocomplete="phone_number"
                     @input="form.numero_cel = formatPhoneNumber(form.numero_cel)"
                 />
-                <InputError class="mt-2" :message="form.errors.email" />
+                <InputError class="mt-2" :message="form.errors.numero_cel" />
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password" value="Password" />
+                <InputLabel for="password" value="Senha" />
                 <TextInput
                     id="password"
                     type="password"
@@ -117,7 +119,7 @@ const formatPhoneNumber = (value) => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password_confirmation" value="Confirm Password" />
+                <InputLabel for="password_confirmation" value="Confirmar Senha" />
                 <TextInput
                     id="password_confirmation"
                     type="password"
@@ -144,7 +146,7 @@ const formatPhoneNumber = (value) => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="address" value="Address" />
+                <InputLabel for="address" value="Endereço" />
                 <TextInput
                     id="address"
                     type="text"
@@ -152,11 +154,11 @@ const formatPhoneNumber = (value) => {
                     v-model="form.address"
                     required
                 />
-       
+                <InputError class="mt-2" :message="form.errors.address" />
             </div>
 
             <div class="mt-4">
-                <InputLabel for="city" value="City" />
+                <InputLabel for="city" value="Cidade" />
                 <TextInput
                     id="city"
                     type="text"
@@ -164,11 +166,11 @@ const formatPhoneNumber = (value) => {
                     v-model="form.city"
                     required
                 />
-            
+                <InputError class="mt-2" :message="form.errors.city" />
             </div>
 
             <div class="mt-4">
-                <InputLabel for="state" value="State" />
+                <InputLabel for="state" value="Estado" />
                 <TextInput
                     id="state"
                     type="text"
@@ -177,23 +179,21 @@ const formatPhoneNumber = (value) => {
                     required
                     maxlength="2"
                 />
-    
+                <InputError class="mt-2" :message="form.errors.state" />
             </div>
 
-            <div class="flex items-center justify-end mt-4">
+            <div class="flex items-center justify-end mt-6">
                 <Link
                     :href="route('login')"
-                    class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                    Already registered?
+                    Já registrado?
                 </Link>
 
-                <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Register
+                <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                    Registrar
                 </PrimaryButton>
             </div>
         </form>
     </GuestLayout>
 </template>
-
-
