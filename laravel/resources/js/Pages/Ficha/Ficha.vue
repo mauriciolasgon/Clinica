@@ -11,12 +11,11 @@ const ficha =props.agendamento.ficha;
 
 const endereco =ref([]);
 
-
+let chegada=props.agendamento.chegada;
 
 
 
 const fetchAddress = async () => {
-    
     if (paciente.cep.length === 8) {
         try {
             const response = await fetch(`https://viacep.com.br/ws/${paciente.cep}/json/`);
@@ -34,7 +33,12 @@ const fetchAddress = async () => {
 onMounted(() => {
     fetchAddress();
 });
+const Finaliza =  () => {
+    chegada=2;
+    const scheduleId = props.agendamento.id;
+    axios.post(`schedule/update/${scheduleId}`,chegada);
 
+};
 const enviarFormulario = async () => {
     try {
         const dadosFormulario = {
@@ -49,9 +53,11 @@ const enviarFormulario = async () => {
             queixa:ficha.queixa,
             atestados:ficha.atestados,
             diagnostico:ficha.diagnostico,
-            encaminhamentos:ficha.encaminhamentos
-                 
+            encaminhamentos:ficha.encaminhamentos,        
         };
+        if(chegada===2){
+
+        }
         // Envie os dados do formulário para o backend
         await axios.post('/attFicha',dadosFormulario);
         // Exibir uma mensagem de sucesso para o usuário, redirecionar ou fazer qualquer outra ação necessária
@@ -104,7 +110,10 @@ const enviarFormulario = async () => {
           <label for="dataAtendimento">Data do Atendimento</label>
           <input id="dataAtendimento" name="dataAtendimento" :placeholder="ficha.data_atendimento" v-model="ficha.data_atendimento" >
         </div>
-        <div class="form-group">
+       
+        <div class="form-group"  v-if="props.auth.user.role !== 1">
+          <span for="encaminhamentos">Área do Profissional</span>
+          <div class="form-group">
           <label for="queixaPrincipal">Queixa Principal</label>
           <textarea id="queixaPrincipal" name="queixaPrincipal" rows="4" :placeholder="ficha.queixa" v-model="ficha.queixa"></textarea>
         </div>
@@ -120,14 +129,12 @@ const enviarFormulario = async () => {
           <label for="encaminhamentos">Encaminhamentos</label>
           <textarea id="encaminhamentos" name="encaminhamentos" rows="4" v-model="ficha.encaminhamentos" :placeholder="ficha.encaminhamentos"></textarea>
         </div>
-        <div class="form-group"  v-if="props.auth.user.role !== 1">
-          <span for="encaminhamentos">Área do Profissional</span>
-          <label>Informações adicionais da sessão</label>
-          <textarea id="encaminhamentos" name="encaminhamentos" rows="4"></textarea>
         </div>
         <div class="form-actions">
           <button type="submit" class="save">Salvar</button>
           <button type="reset" class="reset">Resetar</button>
+          <button type="button" class="reset" @click="Finaliza">Finalizar sessão</button>
+
         </div>
       </form>
     </div>

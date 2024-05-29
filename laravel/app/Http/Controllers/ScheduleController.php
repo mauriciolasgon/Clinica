@@ -101,7 +101,7 @@ class ScheduleController extends Controller
                 return response()->json(['error' => $e->getMessage()], 500);
             }
         }
-        else{
+        else if($request->user()->role === 3){
             try {
                 $request->validate([
                     'chegada' => 'required|integer',
@@ -119,10 +119,19 @@ class ScheduleController extends Controller
             }
             
         }
+        else{
+            try {
+                $schedule = Schedule::findOrFail($schedule_id);
+                $schedule->update([
+                    'chegada' => 2,
+                ]);
+                return redirect()->route('dashboard');
+            } catch (\Exception $e) {
+                // Se ocorrer algum erro durante o processo, retorne uma resposta de erro com detalhes
+                return response()->json(['error' => $e->getMessage()], 500);
+            }
+        }
 
-
-
-        
     }
 
     public function destroy($id)

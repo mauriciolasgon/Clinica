@@ -61,13 +61,13 @@ const mostrarHistorico = ref(false);
 
 const agendamentosFuturos = computed(() => {
   const dataAtual = new Date();
-  return agendamentos.value.filter(agendamento => new Date(agendamento.data) > dataAtual)
+  return agendamentos.value.filter(agendamento => new Date(agendamento.data) > dataAtual && agendamento.chegada !== 2)
     .sort((a, b) => new Date(a.data) - new Date(b.data));
 });
 
 const agendamentosPassados = computed(() => {
   const dataAtual = new Date();
-  return agendamentos.value.filter(agendamento => new Date(agendamento.data) <= dataAtual)
+  return agendamentos.value.filter(agendamento => new Date(agendamento.data) <= dataAtual || agendamento.chegada === 2)
     .sort((a, b) => new Date(b.data) - new Date(a.data));
 });
 

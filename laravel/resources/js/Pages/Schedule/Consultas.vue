@@ -4,7 +4,7 @@ import {usePage,useForm } from '@inertiajs/vue3';
 
 const { props } = usePage();
 const consultas = ref(props.consultas);
-console.log(consultas);
+
 
 
 
@@ -32,7 +32,7 @@ const acionarChegada = (consulta) => {
     <h1>Consultas</h1>
     <ul>
       <li v-for="consulta in consultas" :key="consulta.id">
-          <div v-if="consulta.paciente !== null">
+          <div v-if="consulta.paciente !== null && consulta.chegada===0 ">
             <span>{{ consulta.data }}</span>
             <span>{{ consulta.paciente.name }}</span>
             <span>{{ consulta.horario }}</span>
