@@ -19,6 +19,7 @@ class Schedule extends Model
         'observacoes',
         'ocupado',
         'ficha_id',
+        'chegada',
     ];
 
     public function paciente()

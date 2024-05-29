@@ -1,13 +1,58 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
+import axios from 'axios';
 
 const showingNavigationDropdown = ref(false);
+const { props } = usePage();
+const User = props.auth.user.role;
+
+const psico_id = usePage().props.auth.user.id;
+const psychologistSchedule = ref([]);
+const notificationsCount = ref(0); // Estado reativo para armazenar o número de notificações
+let pollingInterval = null; // Variável para armazenar o intervalo de polling
+const notifications = ref([]); // Estado reativo para armazenar as notificações
+
+const fetchPsychologistSchedule = async () => {
+    try {
+        const response = await axios.get('/schedule/schedule', {
+            params: { psicologa_id: psico_id }
+        });
+        psychologistSchedule.value = response.data;
+        notifications.value = response.data.filter(item => item.chegada === 1);
+
+        notificationsCount.value = notifications.value.length;
+       
+  
+    } catch (error) {
+        console.error('Error fetching psychologist schedule:', error);
+    }
+};
+
+
+const startPolling = () => {
+    pollingInterval = setInterval(fetchPsychologistSchedule, 5000); // Intervalo de 5 segundos para polling
+};
+
+const stopPolling = () => {
+    if (pollingInterval) {
+        clearInterval(pollingInterval);
+    }
+};
+
+onMounted(() => {
+    fetchPsychologistSchedule();
+    startPolling();
+});
+
+onUnmounted(() => {
+    stopPolling();
+});
 </script>
 
 <template>
@@ -38,8 +83,10 @@ const showingNavigationDropdown = ref(false);
                         <div class="hidden sm:flex sm:items-center sm:ms-6">
                             <!-- Settings Dropdown -->
                             <div class="ms-3 relative">
-                                <Dropdown align="right" width="48">
+                               <Dropdown align="right" width="48">
                                     <template #trigger>
+                                
+                                
                                         <span class="inline-flex rounded-md">
                                             <button
                                                 type="button"
@@ -60,17 +107,51 @@ const showingNavigationDropdown = ref(false);
                                                     />
                                                 </svg>
                                             </button>
+                                            
                                         </span>
                                     </template>
 
                                     <template #content>
+          
                                         <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
                                         <DropdownLink :href="route('logout')" method="post" as="button">
                                             Log Out
                                         </DropdownLink>
                                     </template>
+                                    
                                 </Dropdown>
                             </div>
+                            <div class="ms-3 relative">
+                                <Dropdown>
+                                    <!-- Trigger do botão de notificações -->
+                                    <template #trigger>
+                                        <span class="inline-flex relative rounded-md">
+                                            <button
+                                                type="menu"
+                                                @click="Notification" v-if="User === 2"
+                                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150"
+                                            >
+                                                <!-- Caixa de notificações -->
+                                                <div>
+                                                    Notificações
+                                                    <!-- Número de notificações -->
+                                                    <div class="absolute -top-2 -right-2 text-red-500 text-sm font-bold">
+                                                        {{ notificationsCount }}
+                                                    </div>
+                                                </div>
+                                            </button>
+                                        </span>
+                                    </template>
+
+                                    <!-- Conteúdo do dropdown -->
+                                    <template #content>
+                                        <DropdownLink :href="route('ficha', { data: notification })" v-for="notification in notifications" :key="notification.id"> {{ notification.paciente.name}} chegou</DropdownLink>
+                                    </template>
+                                </Dropdown>
+                            </div>
+
+
+
                         </div>
 
                         <!-- Hamburger -->

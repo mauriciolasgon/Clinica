@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Carregando...</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f3f3f3;
+        font-family: Arial, sans-serif;
+      }
+      h1 {
+        margin-bottom: 20px;
+      }
+      #timer {
+        font-size: 24px;
+        color: #555;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Carregando, por favor aguarde...</h1>
+    <div id="timer">30 segundos restantes</div>
+    <script>
+      let timeLeft = 30;
+      const timerElement = document.getElementById('timer');
+
+      const updateTimer = () => {
+        if (timeLeft > 0) {
+          timerElement.textContent = `${timeLeft} segundos restantes`;
+          timeLeft--;
+        } else {
+          timerElement.textContent = 'Iniciando a aplicação...';
+          clearInterval(timerInterval);
+          location.reload();
+        }
+      };
+
+      const timerInterval = setInterval(updateTimer, 1000);
+    </script>
+  </body>
+</html>

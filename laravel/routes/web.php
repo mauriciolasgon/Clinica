@@ -56,6 +56,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{schedule}', [ScheduleController::class, 'destroy'])->name('schedule.destroy');
         Route::post('/update/{schedule_id}', [ScheduleController::class, 'update'])->name('schedule.update');
         Route::get('/schedulePaciente', [ScheduleController::class, 'pacient_schedule'])->name('schedule.paciente');
+        Route::get('/consultas', [ScheduleController::class, 'Secretariaconsultas'])->name('schedule.consulta');
 
     });
 

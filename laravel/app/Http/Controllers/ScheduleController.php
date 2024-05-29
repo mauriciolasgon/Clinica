@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\Ficha;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Carbon\Carbon; 
+
 
 class ScheduleController extends Controller
 {
@@ -64,40 +66,62 @@ class ScheduleController extends Controller
 
     public function update(Request $request,$schedule_id)
     {
-        try {
-            $request->validate([
-                'paciente_id' => 'required|integer|exists:users,id',
-                'ocupado' => 'required|boolean'
-            ]);
+        if($request->user()->role === 1){
+            try {
+                $request->validate([
+                    'paciente_id' => 'required|integer|exists:users,id',
+                    'ocupado' => 'required|boolean'
+                ]);
+        
+                $schedule = Schedule::findOrFail($schedule_id);
+                $ficha=Ficha::create([
+                    'paciente_id' => $request->user()->id,
+                    'paciente_name'=>$request->user()->name,
+                    'email'=>$request->user()->email,
+                    'cep'=>$request->user()->cep, 
+                    'numero_cel'=>$request->user()->numero_cel,
+                    'genero'=>null,
+                    'data_atendimento'=>$schedule->data,
+                    'queixa'=>null,
+                    'atestado'=>null,
+                    'encaminhamentos'=>null,
+                    'diagnostico'=>null
+                ]);
+                $schedule->update([
+                    'paciente_id' => $request->user()->id,
+                    'ocupado' =>true,
+                    'ficha_id'=>$ficha->id,
+                ]);
     
-            $schedule = Schedule::findOrFail($schedule_id);
-            $ficha=Ficha::create([
-                'paciente_id' => $request->user()->id,
-                'paciente_name'=>$request->user()->name,
-                'email'=>$request->user()->email,
-                'cep'=>$request->user()->cep, 
-                'numero_cel'=>$request->user()->numero_cel,
-                'genero'=>null,
-                'data_atendimento'=>$schedule->data,
-                'queixa'=>null,
-                'atestado'=>null,
-                'encaminhamentos'=>null,
-                'diagnostico'=>null
-            ]);
-            $schedule->update([
-                'paciente_id' => $request->user()->id,
-                'ocupado' =>true,
-                'ficha_id'=>$ficha->id,
-            ]);
-
-            
-    
-            return redirect()->route('schedule.paciente');
-
-        } catch (\Exception $e) {
-            // Se ocorrer algum erro durante o processo, retorne uma resposta de erro com detalhes
-            return response()->json(['error' => $e->getMessage()], 500);
+                
+        
+                return redirect()->route('schedule.paciente');
+            } catch (\Exception $e) {
+                // Se ocorrer algum erro durante o processo, retorne uma resposta de erro com detalhes
+                return response()->json(['error' => $e->getMessage()], 500);
+            }
         }
+        else{
+            try {
+                $request->validate([
+                    'chegada' => 'required|integer',
+                
+                ]);
+                $schedule = Schedule::findOrFail($schedule_id);
+                $schedule->update([
+                    'chegada' => 1,
+                ]);
+    
+                return redirect()->route('dashboard');
+            } catch (\Exception $e) {
+                // Se ocorrer algum erro durante o processo, retorne uma resposta de erro com detalhes
+                return response()->json(['error' => $e->getMessage()], 500);
+            }
+            
+        }
+
+
+
         
     }
 
@@ -117,6 +141,21 @@ class ScheduleController extends Controller
 
         return Inertia::render('Schedule/Paciente', [
             'agendamentos' => $agendamentos
+        ]);
+    }
+
+    public function Secretariaconsultas(Request $request)
+    {
+        $dataAtual = Carbon::now();
+    
+        // Selecione todos os agendamentos com data futura
+        $consultas = Schedule::with('paciente','psicologa')
+            ->whereDate('data', '>', $dataAtual)
+            ->get();
+    
+        // Retorne os agendamentos futuros para a view
+        return Inertia::render('Schedule/Consultas', [
+            'consultas' => $consultas
         ]);
     }
 }
