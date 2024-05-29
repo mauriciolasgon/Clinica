@@ -2,7 +2,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head,Link } from '@inertiajs/vue3';
 
-
 </script>
 
 <template>
@@ -59,10 +58,7 @@ import { Head,Link } from '@inertiajs/vue3';
         </AuthenticatedLayout>
     </div>
 </template>
-<script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, Link } from '@inertiajs/vue3';
-</script>
+
 <style scoped>
 .dashboard-container {
     max-width: 900px;
