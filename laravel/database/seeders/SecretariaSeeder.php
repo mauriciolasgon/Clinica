@@ -31,8 +31,8 @@ class SecretariaSeeder extends Seeder
         User::create([
             'name' => 'Carlos',
             'email' => 'Carlos@gmail.com',
-            'cep' => null,
-            'numero_cel' => null,
+            'cep' => '13086900',
+            'numero_cel' => '(00) 00000-0000',
             'password' => Hash::make('carlos123'), 
             'role' => 1,
         ]);
