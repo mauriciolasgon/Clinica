@@ -12,7 +12,7 @@ const fetchPsychologistSchedule = async () => {
             params: { psicologa_id: psico_id }
         });
         psychologistSchedule.value = response.data;
-        console.log(psychologistSchedule);
+        
     } catch (error) {
         console.error('Error fetching psychologist schedule:', error);
     }

@@ -34,7 +34,7 @@ const acionarChegada = (consulta) => {
         <h1 class="text-3xl font-bold mb-6">Consultas</h1>
         <ul class="space-y-4">
             <li v-for="consulta in consultas" :key="consulta.id" class="bg-white p-4 rounded-lg shadow-md">
-                <div v-if="consulta.paciente !== null &&  consulta.chegada === 0" >
+                <div v-if="consulta.paciente !== null ">
                     <div class="flex justify-between">
                         <span class="font-semibold">{{ consulta.data }}</span>
                         <span>{{ consulta.horario }}</span>
@@ -45,9 +45,12 @@ const acionarChegada = (consulta) => {
                     <div class="mt-1">
                         <span class="text-gray-700">Psicóloga: {{ consulta.psicologa.name }}</span>
                     </div>
-                    <button @click="acionarChegada(consulta)" class="mt-4 bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700">
+                    <button @click="acionarChegada(consulta)" class="mt-4 bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700" 
+                    v-if="consulta.chegada === 0"
+                    >
                         Acionar chegada
                     </button>
+                    <span v-if="consulta.chegada !== 0">Psicologa ja notificada</span>
                 </div>
             </li>
         </ul>

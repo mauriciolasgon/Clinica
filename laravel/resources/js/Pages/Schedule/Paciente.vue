@@ -20,7 +20,7 @@
       <ul class="agendamentos-list">
         <li v-for="agendamento in agendamentosFuturos" :key="agendamento.id" class="agendamento-item">
           <div>
-            <span class="paciente-name">{{ agendamento.paciente.name }}</span>
+            <span class="paciente-name">Psicologo(a): {{ agendamento.psicologa.name }}</span>
             <span class="agendamento-details">Data: {{ agendamento.data }}</span>
             <span class="agendamento-details">Horário: {{ agendamento.horario }}</span>
             <span class="agendamento-details">Duração: {{ agendamento.tempo_sessao }}</span>
@@ -37,7 +37,7 @@
       <ul class="agendamentos-list">
         <li v-for="agendamento in agendamentosPassados" :key="agendamento.id" class="agendamento-item">
           <div>
-            <span class="paciente-name">{{ agendamento.paciente.name }}</span>
+            <span class="paciente-name">Psicologo(a): {{ agendamento.psicologa.name }}</span>
             <span class="agendamento-details">Data: {{ agendamento.data }}</span>
             <span class="agendamento-details">Horário: {{ agendamento.horario }}</span>
             <span class="agendamento-details">Duração: {{ agendamento.tempo_sessao }}</span>
@@ -60,7 +60,7 @@ const agendamentos = ref(props.agendamentos);
 const mostrarTodos = ref(false);
 const mostrarFuturos = ref(true);
 const mostrarHistorico = ref(false);
-
+console.log(agendamentos);
 const agendamentosFuturos = computed(() => {
   const dataAtual = new Date();
   return agendamentos.value.filter(agendamento => new Date(agendamento.data) > dataAtual && agendamento.chegada !== 2)

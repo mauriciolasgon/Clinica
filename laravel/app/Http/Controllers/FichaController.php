@@ -47,7 +47,7 @@ class FichaController extends Controller
                 'cep' => 'required|string',
                 'data_atendimento' => 'required|date',
                 'queixa' => 'nullable|string',
-                'atestados' => 'nullable|string',
+                'atestado' => 'nullable|string',
                 'diagnostico' => 'nullable|string',
                 'encaminhamentos' => 'nullable|string'
             ]);

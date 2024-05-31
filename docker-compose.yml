@@ -7,9 +7,9 @@ services:
     volumes:
       - ./laravel:/var/www/html:rw,cached
       - ./laravel/config/apache.conf:/etc/apache2/sites-available/000-default.conf
-      - /var/www/html/node_modules 
-      - /var/www/html/public/build
-      - /var/www/html/vendor
+      - node-modules:/var/www/html/node_modules 
+      - build:/var/www/html/public/build
+      - vendor:/var/www/html/vendor
 
     environment:
       - DB_HOST=db  
@@ -32,6 +32,9 @@ services:
 
 volumes:
   db-data:
+  node-modules:
+  build:
+  vendor:
 
 networks:
   app-network:

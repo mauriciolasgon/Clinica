@@ -144,7 +144,7 @@ class ScheduleController extends Controller
 
     public function pacient_schedule(Request $request)
     {
-        $agendamentos = Schedule::with('paciente','ficha')
+        $agendamentos = Schedule::with('paciente','ficha','psicologa')
             ->where('paciente_id', $request->user()->id)
             ->get();
 

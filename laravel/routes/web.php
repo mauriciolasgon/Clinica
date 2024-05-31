@@ -5,7 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FichaController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\AgendaController;
-
+use App\Http\Controllers\PdfController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -80,6 +80,11 @@ Route::post('/register-psicologa', [RegisteredUserController::class, 'store'])->
 Route::get('/pacientes', [FichaController::class, 'index'])->name('pacientes');
 Route::get('/ficha', [FichaController::class, 'ficha'])->name('ficha');
 Route::post('/attFicha', [FichaController::class, 'attFicha'])->name('atualizarFicha');
+
+//Gerar pdfs
+
+Route::post('/generate-atestado-pdf', [PdfController::class, 'generateAtestadoPdf']);
+Route::post('/generate-encaminhamento-pdf', [PdfController::class, 'generateEncaminhamentosPdf']);
 
 
 

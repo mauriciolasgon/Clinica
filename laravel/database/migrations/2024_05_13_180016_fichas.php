@@ -24,8 +24,6 @@ return new class extends Migration
             $table->string('atestado')->nullable();
             $table->string('encaminhamentos')->nullable();
             $table->string('diagnostico')->nullable();
-            
-
             $table->timestamps();
         });
     }
