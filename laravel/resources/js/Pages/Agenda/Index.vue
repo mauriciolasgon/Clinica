@@ -24,9 +24,7 @@ onMounted(() => {
   fetchPsychologistSchedule();
 });
 
-const voltar = () => {
-  window.history.back();
-};
+
 </script>
 
 <template>
@@ -36,7 +34,7 @@ const voltar = () => {
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
           <div class="p-6 text-gray-900 dark:text-gray-100">
-            <button @click="voltar" class="back-button">Voltar</button>
+            <a :href="route('dashboard')" class="btn-back">Voltar</a>
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Agenda</h2>
             <ul>
               <li v-for="schedule in psychologistSchedule" :key="schedule.id">
@@ -66,18 +64,19 @@ const voltar = () => {
 </template>
 
 <style scoped>
-.back-button {
-  background-color: #4a90e2;
-  color: #ffffff;
-  border: none;
-  border-radius: 25px;
-  padding: 12px 25px;
-  margin-bottom: 20px;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
+.btn-back {
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
 }
 
-.back-button:hover {
-  opacity: 0.8;
+.btn-back:hover {
+    background-color: #0056b3;
 }
 </style>

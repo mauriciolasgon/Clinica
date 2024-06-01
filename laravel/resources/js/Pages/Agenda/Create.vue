@@ -35,6 +35,8 @@ export default {
         },
     },
 };
+
+
 </script>
 
 <template>
@@ -42,7 +44,7 @@ export default {
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">Dashboard do Psicólogo</h2>
     </template>
-
+    <a :href="route('agendas.index')" class="btn-back">Voltar</a>
     <div class="container mx-auto p-4">
       <h1 class="text-3xl font-bold mb-4">Adicionar Sessão</h1>
 
@@ -66,3 +68,22 @@ export default {
     </div>
   </AuthenticatedLayout>
 </template>
+
+<style scoped>
+.btn-back {
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.btn-back:hover {
+    background-color: #0056b3;
+}
+</style>
+
