@@ -20,11 +20,11 @@ class SecretariaSeeder extends Seeder
         ]);
 
         User::create([
-            'name' => 'Psicoloca',
-            'email' => 'psicoloca@gmail.com',
+            'name' => 'Psicologa',
+            'email' => 'psicologa@gmail.com',
             'cep' => null,
             'numero_cel' => null,
-            'password' => Hash::make('psicoloca123'), 
+            'password' => Hash::make('psicologa123'), 
             'role' => 2,
         ]);
 
