@@ -333,7 +333,7 @@ blockquote-footer {
 
 .container > .row > .col-md-4, .container > .row > .col-md-6 {
   max-width: 600px;
-  margin:10px
+  margin:10px;
 }
 
 .section-title {
