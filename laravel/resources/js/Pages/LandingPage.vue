@@ -130,15 +130,15 @@
         <div class="row mt-4">
           <div class="col-md-4">
             <h4 class="keyword-highlight">Telefone</h4>
-            <p>   (11)1238   </p>
+            <p class="field-margin">(99)99999-9999</p>
           </div>
           <div class="col-md-4">
             <h4 class="keyword-highlight">E-mail</h4>
-            <p>    Gablopes@gmail.com   </p>
+            <p class="field-margin">xames@gmail.com</p>
           </div>
           <div class="col-md-4">
             <h4 class="keyword-highlight">Endereço</h4>
-            <p>    Campinas uai    </p>
+            <p class="field-margin">Rua PUC-CAMPINAS 123 - Campinas SP</p>
           </div>
         </div>
         <div class="row mt-4">
@@ -200,6 +200,7 @@ export default {
 </script>
 
 <style scoped>
+
 .landing-page {
   font-family: Arial, sans-serif;
 }
@@ -332,6 +333,7 @@ blockquote-footer {
 
 .container > .row > .col-md-4, .container > .row > .col-md-6 {
   max-width: 600px;
+  margin:10px
 }
 
 .section-title {
