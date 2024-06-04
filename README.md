@@ -12,7 +12,7 @@ Para instalar o projeto, siga os passos abaixo:
 
 - Baixe o repositório
 ```
-Baixe o repositório com download zip e extraia na pasta compartilhada da sua VM
+Baixe o repositório com download zip e extraia em alguma pasta conhecida
 ```
 
 - Executar o sistema (localhost)
