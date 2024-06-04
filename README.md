@@ -17,8 +17,8 @@ Baixe a última realise com download zip e extraia em alguma pasta conhecida
 
 - Alterar os campos do .env:
 ```
-DB_USERNAME=seu_username
-DB_PASSWORD=sua_senha
+DB_USERNAME=root
+DB_PASSWORD=123
 ```
 
 - Executar o sistema (localhost)
