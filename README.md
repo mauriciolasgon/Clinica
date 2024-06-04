@@ -12,7 +12,13 @@ Para instalar o projeto, siga os passos abaixo:
 
 - Baixe o repositório
 ```
-Baixe o repositório com download zip e extraia em alguma pasta conhecida
+Baixe a última realise com download zip e extraia em alguma pasta conhecida
+```
+
+- Alterar os campos do .env:
+```
+DB_USERNAME=seu_username
+DB_PASSWORD=sua_senha
 ```
 
 - Executar o sistema (localhost)
